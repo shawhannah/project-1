@@ -1,0 +1,208 @@
+body {
+  background: url(../images/moviehistorycopy.jpg) repeat;
+}
+
+/* Main Grid Styling Below */
+#main-grid {
+  display: grid;
+  grid-auto-rows: 3fr 1fr 3fr;
+  min-height: calc(100vh - 80px);
+}
+
+#moviedb-div {
+  grid-row: 1 / span 1;
+  background: rgba(0, 0, 0, 0.8);
+  width: 1000px;
+  height: 400px;
+  margin: 35px auto;
+  display: grid;
+  grid-auto-flow: column;
+  overflow: scroll;
+  position: relative;
+  grid-gap: 30px;
+  border-left: solid rgba(0, 0, 0, 0) 15px;
+  border-right: solid rgba(0, 0, 0, 0) 15px;
+}
+
+#search-div {
+  grid-row: 2 / span 1;
+  margin: auto 0;
+}
+
+#zomato-div {
+  grid-row: 3 / span 1;
+  background: rgba(0, 0, 0, 0.8);
+  width: 1000px;
+  height: 400px;
+  margin: 35px auto;
+  display: grid;
+  grid-auto-flow: column;
+  overflow: scroll;
+  position: relative;
+  grid-gap: 15px;
+  border-left: solid rgba(0, 0, 0, 0) 15px;
+  border-right: solid rgba(0, 0, 0, 0) 15px;
+}
+
+/* Movie-Div -> MovieDB API Styling */
+.movie-divs {
+  margin-top: 15px;
+}
+
+.movie-posters {
+  height: 280px;
+  border: dashed rgb(213, 53, 62) 5px;
+}
+
+.movie-ratings {
+  color: yellow;
+  font-size: 12px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.movie-names {
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.release-dates {
+  color: white;
+  font-style: italic;
+  font-size: 10px;
+  margin-top: -12px;
+  text-align: center;
+}
+
+/* Search-Div -> Search Bar Styling */
+#location-finder {
+  height: 40px;
+  margin-left: 15px;
+  margin-right: -54px;
+  z-index: 2;
+}
+
+#search-div-formatting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(213, 53, 62, 0.8);
+  margin: 0;
+  border-top: dashed white 5px;
+  border-bottom: dashed white 5px;
+}
+
+#cinegrub-logo {
+  font-size: 60px;
+  font-family: "Lobster Two", cursive;
+  padding: 10px;
+  color: rgb(255, 246, 142);
+  text-shadow: 5px -2px 10px black, 2px 2px 10px black;
+}
+
+.form-control {
+  width: 200px;
+  height: 55px;
+  margin: auto 10px;
+  font-size: 25px;
+  font-weight: bold;
+  font-family: sans-serif;
+  text-align: center;
+  padding-left: 32px;
+  color: #495057;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: initial;
+}
+
+.btn {
+  height: 55px;
+  font-size: 25px;
+  text-align: center;
+  font-weight: bold;
+  font-family: sans-serif;
+  margin-left: -15px;
+  background: #495057;
+  color: white;
+  border-radius: inherit;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.btn:focus {
+  color: white;
+  background: #495057;
+  border-color: none;
+  outline: initial;
+  box-shadow: none;
+}
+
+/* Zomato-Div -> Zomato API Styling */
+.restaurant-divs {
+  background: slategray;
+  height: 365px;
+  width: 250px;
+  border-radius: 5px;
+  margin: auto;
+  border: solid white 5px;
+}
+
+.restaurant-divs:nth-child(odd) {
+  background: indianred;
+}
+
+.fa-utensils {
+  color: white;
+  font-size: 145px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 60px;
+  padding-bottom: 34px;
+}
+
+.restaurant-ratings {
+  font-size: 25px;
+  text-align: center;
+  margin-top: 21px;
+  background: white;
+}
+
+.restaurant-names {
+  text-align: center;
+  margin-top: 10px;
+  font-family: "Medula One", cursive;
+  font-size: 27px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: white;
+}
+
+/* Sticky Footer & Footer Styling */
+#sticky-footer {
+  min-height: calc(100vh - 80px);
+}
+
+#trilogy-logo {
+  height: 50px;
+  margin-right: 15px;
+  position: absolute;
+  right: 0;
+}
+
+footer {
+  height: 80px;
+  background: rgb(0, 0, 0, 0.8);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  position: relative;
+  border-top: dashed white 4px;
+  box-sizing: content-box;
+}
