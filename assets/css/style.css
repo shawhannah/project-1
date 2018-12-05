@@ -11,9 +11,9 @@ body {
 
 #moviedb-div {
   grid-row: 1 / span 1;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.6);
   width: 1000px;
-  height: 400px;
+  height: 450px;
   margin: 35px auto;
   display: grid;
   grid-auto-flow: column;
@@ -31,9 +31,9 @@ body {
 
 #zomato-div {
   grid-row: 3 / span 1;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.6);
   width: 1000px;
-  height: 400px;
+  height: 450px;
   margin: 35px auto;
   display: grid;
   grid-auto-flow: column;
@@ -76,6 +76,23 @@ body {
   text-align: center;
 }
 
+.check-availbility {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(213, 53, 62);
+  border-radius: 5px;
+  height: 35px;
+  color: white;
+  font-weight: bold;
+  font-variant: all-petite-caps;
+}
+
+.movie-divs a:hover {
+  color: white;
+  text-decoration: none;
+}
+
 /* Search-Div -> Search Bar Styling */
 #location-finder {
   height: 40px;
@@ -90,8 +107,7 @@ body {
   justify-content: center;
   background: rgb(213, 53, 62, 0.8);
   margin: 0;
-  border-top: dashed white 5px;
-  border-bottom: dashed white 5px;
+  outline: dashed white 5px;
 }
 
 #cinegrub-logo {
@@ -147,7 +163,7 @@ body {
   height: 365px;
   width: 250px;
   border-radius: 5px;
-  margin: auto;
+  margin-top: 15px;
   border: solid white 5px;
 }
 
@@ -182,6 +198,26 @@ body {
   color: white;
 }
 
+.more-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  height: 35px;
+  color: white;
+  font-weight: bold;
+  margin: auto;
+  margin-top: 30px;
+  width: 125px;
+  letter-spacing: 2px;
+  border: solid white 2px;
+}
+
+.restaurant-divs a:hover {
+  color: white;
+  text-decoration: none;
+}
+
 /* Sticky Footer & Footer Styling */
 #sticky-footer {
   min-height: calc(100vh - 80px);
@@ -203,6 +239,5 @@ footer {
   justify-content: center;
   font-size: 18px;
   position: relative;
-  border-top: dashed white 4px;
-  box-sizing: content-box;
+  outline: dashed white 5px;
 }
