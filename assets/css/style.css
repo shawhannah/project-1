@@ -1,0 +1,8 @@
+.movieCard {
+  float: left;
+  margin-right: 10px;
+}
+p {
+  width: 100%;
+  position: relative;
+}
