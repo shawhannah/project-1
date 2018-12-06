@@ -6,7 +6,7 @@ body {
 #main-grid {
   display: grid;
   grid-auto-rows: 3fr 1fr 3fr;
-  min-height: calc(100vh - 80px);
+  min-height: 100vh;
 }
 
 #moviedb-div {
@@ -15,7 +15,7 @@ body {
   width: 1000px;
   height: 450px;
   margin: 35px auto;
-  display: grid;
+  display: none;
   grid-auto-flow: column;
   overflow: scroll;
   position: relative;
@@ -25,7 +25,6 @@ body {
 }
 
 #search-div {
-  grid-row: 2 / span 1;
   margin: auto 0;
 }
 
@@ -35,7 +34,7 @@ body {
   width: 1000px;
   height: 450px;
   margin: 35px auto;
-  display: grid;
+  display: none;
   grid-auto-flow: column;
   overflow: scroll;
   position: relative;
@@ -47,11 +46,12 @@ body {
 /* Movie-Div -> MovieDB API Styling */
 .movie-divs {
   margin-top: 15px;
+  position: relative;
 }
 
 .movie-posters {
   height: 280px;
-  border: dashed rgb(213, 53, 62) 5px;
+  border: dashed white 5px;
 }
 
 .movie-ratings {
@@ -61,7 +61,7 @@ body {
   text-align: center;
 }
 
-.movie-names {
+.movie-titles {
   color: white;
   font-size: 12px;
   text-align: center;
@@ -76,16 +76,19 @@ body {
   text-align: center;
 }
 
-.check-availbility {
+.check-availability {
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgb(213, 53, 62);
   border-radius: 5px;
   height: 35px;
+  width: 190px;
   color: white;
   font-weight: bold;
   font-variant: all-petite-caps;
+  position: absolute;
+  bottom: 0;
 }
 
 .movie-divs a:hover {
@@ -103,19 +106,31 @@ body {
 
 #search-div-formatting {
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
   background: rgb(213, 53, 62, 0.8);
   margin: 0;
-  outline: dashed white 5px;
+  height: 150px;
 }
 
-#cinegrub-logo {
-  font-size: 60px;
+#cinegrub-intro-logo {
+  font-size: 120px;
   font-family: "Lobster Two", cursive;
   padding: 10px;
   color: rgb(255, 246, 142);
   text-shadow: 5px -2px 10px black, 2px 2px 10px black;
+  display: flex;
+  justify-content: center;
+}
+
+#cinegrub-logo {
+  font-size: 85px;
+  font-family: "Lobster Two", cursive;
+  padding: 10px;
+  color: rgb(255, 246, 142);
+  text-shadow: 5px -2px 10px black, 2px 2px 10px black;
+  display: none;
 }
 
 .form-control {
@@ -155,6 +170,28 @@ body {
   border-color: none;
   outline: initial;
   box-shadow: none;
+}
+
+#error-message {
+  margin: 0;
+  position: absolute;
+  bottom: 19px;
+  margin-left: -50px;
+  font-size: 11px;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 5px;
+  background: darkred;
+  display: none;
+}
+
+#cinegrub-intro {
+  color: white;
+  font-style: italic;
+  font-size: 50px;
+  font-family: "Grand Hotel", cursive;
+  text-align: center;
+  margin-top: 25px;
 }
 
 /* Zomato-Div -> Zomato API Styling */
@@ -234,10 +271,17 @@ footer {
   height: 80px;
   background: rgb(0, 0, 0, 0.8);
   color: white;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   font-size: 18px;
   position: relative;
-  outline: dashed white 5px;
+  border-top: solid rgb(213, 53, 62, 0.8) 5px;
+}
+
+
+
+
+
+;
 }
