@@ -61,6 +61,12 @@ body {
   text-align: center;
 }
 
+.no-user-ratings {
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0;
+}
+
 .movie-titles {
   color: white;
   font-size: 12px;
@@ -270,18 +276,11 @@ body {
 footer {
   height: 80px;
   background: rgb(0, 0, 0, 0.8);
-  color: white;
+  color: rgba(255, 255, 255, 0.5);
   display: none;
   align-items: center;
   justify-content: center;
   font-size: 18px;
   position: relative;
   border-top: solid rgb(213, 53, 62, 0.8) 5px;
-}
-
-
-
-
-
-;
 }
