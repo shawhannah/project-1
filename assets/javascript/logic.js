@@ -13,11 +13,6 @@ var errorMessage = $("<p>")
 var movieDiv = $("#moviedb-div");
 var zomatoDiv = $("#zomato-div");
 
-// Star Rating Elements
-var star = $("<i>").addClass("fas fa-star");
-var halfStar = $("<i>").addClass("fas fa-star-half-alt");
-var noStar = $("<i>").addClass("far fa-star");
-
 // Submit Button with Zip Code Validation
 submitButton.on("click", function(e) {
   e.preventDefault();
@@ -84,49 +79,102 @@ function showMovies(array) {
 
     switch (movieScore) {
       case 1:
-        movieScoreDiv.append(noStar, noStar, noStar, noStar, noStar);
-        var movieRating = movieScoreDiv;
+        movieScoreDiv.append(
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star")
+        );
         break;
       case 2:
-        movieScoreDiv.append(halfStar, noStar, noStar, noStar, noStar);
-        var movieRating = movieScoreDiv;
+        movieScoreDiv.append(
+          $("<i>").addClass("fas fa-star-half-alt"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star")
+        );
         break;
       case 3:
-        movieScoreDiv.append(star, halfStar, noStar, noStar, noStar);
-        var movieRating = movieScoreDiv;
+        movieScoreDiv.append(
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star-half-alt"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star")
+        );
         break;
       case 4:
-        movieScoreDiv.append(star, star, noStar, noStar, noStar);
-        var movieRating = movieScoreDiv;
+        movieScoreDiv.append(
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star")
+        );
         break;
       case 5:
-        movieScoreDiv.append(star, star, halfStar, noStar, noStar);
-        var movieRating = movieScoreDiv;
+        movieScoreDiv.append(
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star-half-alt"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star")
+        );
         break;
       case 6:
-        movieScoreDiv.append(star, star, star, noStar, noStar);
-        var movieRating = movieScoreDiv;
+        movieScoreDiv.append(
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star")
+        );
         break;
       case 7:
-        movieScoreDiv.append(star, star, star, halfStar, noStar);
-        var movieRating = movieScoreDiv;
+        movieScoreDiv.append(
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star-half-alt"),
+          $("<i>").addClass("far fa-star")
+        );
         break;
       case 8:
-        movieScoreDiv.append(star, star, star, star, noStar);
-        var movieRating = movieScoreDiv;
+        movieScoreDiv.append(
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("far fa-star")
+        );
         break;
       case 9:
-        movieScoreDiv.append(star, star, star, star, halfStar);
-        var movieRating = movieScoreDiv;
+        movieScoreDiv.append(
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star-half-alt")
+        );
         break;
       case 10:
-        movieScoreDiv.append(star, star, star, star, star);
-        var movieRating = movieScoreDiv;
+        movieScoreDiv.append(
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star")
+        );
         break;
 
       default:
-        movieScoreDiv.append(noStar, noStar, noStar, noStar, noStar);
-        var movieRating = movieScoreDiv;
+        movieScoreDiv.append(
+          $("<p>")
+            .text("No Reviews")
+            .addClass("no-user-ratings")
+        );
     }
 
     var movieTitle = $("<p>")
@@ -147,7 +195,7 @@ function showMovies(array) {
 
     movieInnerDiv.append(
       moviePosterLink,
-      movieRating,
+      movieScoreDiv,
       movieTitle,
       movieReleaseDate,
       movieAvailabilityLink
