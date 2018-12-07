@@ -156,6 +156,10 @@ body {
   border-color: initial;
 }
 
+#user-input::placeholder {
+  color: rgb(196, 195, 195);
+}
+
 .btn {
   height: 55px;
   font-size: 25px;
