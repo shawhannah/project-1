@@ -2,6 +2,7 @@
 var zipcode;
 var movieArr;
 var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+var zomatoArr;
 
 // DOM Reference Variables
 var submitButton = $("#submit-button");
@@ -31,7 +32,7 @@ submitButton.on("click", function(e) {
     console.log("var zipcode = " + zipcode);
 
     formatWebpage();
-
+    // ajax call for movies
     $.ajax({
       url: "https://api.themoviedb.org/3/movie/now_playing",
       data: {
@@ -44,6 +45,12 @@ submitButton.on("click", function(e) {
     }).then(function(response) {
       movieArr = response.results;
       showMovies(movieArr);
+    });
+    // ajax call for food
+    $.ajax({
+      url:
+        "https://developers.zomato.com/api/v2.1/search?q=27615&apikey=b33efca80e6e3f8b5a3cfaf40c6ad1f4",
+      method: "GET"
     });
   }
 });
@@ -153,5 +160,21 @@ function showMovies(array) {
       movieAvailabilityLink
     );
     movieDiv.append(movieInnerDiv);
+  }
+}
+
+// Function for getting Zomato API data
+function showFood(array) {
+  zomatoDiv.empty();
+
+  for (let i in array) {
+    var zomatoInnerDiv = $("<div>").addClass("restaurant-divs");
+
+    var foodName = $("div").addClass("restaurant-names");
+
+    var foodRatingDiv = $("<div>").addClass("restaurant-ratings");
+
+    // If rated, pull aggregate rating
+    // If not rated, show No Rating
   }
 }
