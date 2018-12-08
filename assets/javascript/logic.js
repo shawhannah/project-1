@@ -198,7 +198,7 @@ function showMovies(array) {
 
     var addFavButton = $("<img>").attr({
       class: "addToFav",
-      src: "assets/images/plussymbol.png",
+      src: "assets/images/plussign.jpg",
       alt: "Add To Favorites Button"
     });
 
