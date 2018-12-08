@@ -447,3 +447,46 @@ footer {
   position: relative;
   border-top: solid rgb(213, 53, 62, 0.8) 5px;
 }
+
+#cinegrub-intro {
+  animation: bounce 3.3s ease-out;
+  animation-fill-mode: forwards;
+  -moz-animation: bounce 3.3s ease-out;
+  -moz-animation-fill-mode: forwards;
+  -webkit-animation: bounce 3.3s;
+  -webkit-animation-fill-mode: forwards;
+}
+@-webkit-keyframes bounce {
+  0% {
+    -webkit-transform: translateY(-500px) rotate(0);
+    opacity: 0;
+  }
+  20% {
+    -webkit-transform: translateY(0px);
+    opacity: 1;
+  }
+  21% {
+    -webkit-transform: translateY(0px);
+  }
+  25% {
+    -webkit-transform: translateY(-95px);
+  }
+  30% {
+    -webkit-transform: translateY(-100px) rotate(7deg);
+  }
+  37% {
+    -webkit-transform: translateY(0px) rotate(7deg);
+  }
+  40% {
+    -webkit-transform: rotate(-14deg);
+  }
+  45% {
+    -webkit-transform: rotate(8deg);
+  }
+  50% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+  }
+}
