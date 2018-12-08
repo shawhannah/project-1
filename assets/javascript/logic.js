@@ -22,6 +22,7 @@ submitButton.on("click", function(e) {
     errorMessage.slideUp();
     errorMessage.css("margin-left", "103px");
     zipcode = userInput.val().trim();
+    $("#zipcode").text(zipcode);
     userInput.val("");
     console.log("var zipcode = " + zipcode);
 
@@ -45,6 +46,7 @@ submitButton.on("click", function(e) {
 
 // This function reformats landing page
 function formatWebpage() {
+  $("#zipcode-alert").css("display", "block");
   movieDiv.css("display", "grid");
   zomatoDiv.css("display", "grid");
   $("#search-div").css("grid-row", "2 / span 1");
