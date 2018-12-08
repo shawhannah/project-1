@@ -27,8 +27,7 @@ submitButton.on("click", function(e) {
     console.log("var zipcode = " + zipcode);
 
     formatWebpage();
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     $("#zipcode-alert").css("display", "block");
     $("#main-grid").css("min-height", "calc(100vh - 80px)");
     movieDiv.css("display", "grid");
@@ -36,12 +35,8 @@ submitButton.on("click", function(e) {
     $("#search-div").css("grid-row", "2 / span 1");
     $("footer").css("display", "flex");
 
-=======
     // ajax call for movies
->>>>>>> hannah food api
-=======
-    // ajax call for movies
->>>>>>> cffdcc133aa110556d7b42b3b8379381ebf16a27
+
     $.ajax({
       url: "https://api.themoviedb.org/3/movie/now_playing",
       data: {
@@ -222,8 +217,6 @@ function showMovies(array) {
   }
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 // Login & Password Functionality
 if (localStorage.getItem("login") !== null) {
   console.log(localStorage.getItem("login").length);
@@ -317,25 +310,76 @@ $(document).on("click", "#signIn", function(e) {
       }
     });
 });
-=======
-=======
->>>>>>> cffdcc133aa110556d7b42b3b8379381ebf16a27
+
 // Function for getting Zomato API data
 function showFood(array) {
   zomatoDiv.empty();
-
   for (let i in array) {
     var zomatoInnerDiv = $("<div>").addClass("restaurant-divs");
 
     var foodName = $("div").addClass("restaurant-names");
 
     var foodRatingDiv = $("<div>").addClass("restaurant-ratings");
+    var foodRating = Math.round(array[i].vote_average);
 
-    // If rated, pull aggregate rating
-    // If not rated, show No Rating
+    switch (foodRating) {
+      // case 0 = No Reviews
+      case 0:
+        foodRatingDiv.append(
+          $("<p>")
+            .text("No Reviews")
+            .addClass("no-user-ratings")
+        );
+        break;
+      // case 1 = 1 star
+      case 1:
+        foodRatingDiv.append(
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("fas fa-star-half-alt"),
+          $("<i>").addClass("far fa star")
+        );
+        break;
+      // case 2 = 2 stars
+      case 2:
+        foodRatingDiv.append(
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("fas fa-star-half-alt"),
+          $("<i>").addClass("far fa star")
+        );
+        break;
+      // case 3 = 3 stars
+      case 3:
+        foodRatingDiv.append(
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("fas fa-star-half-alt"),
+          $("<i>").addClass("far fa star")
+        );
+        break;
+      // case 4 = 4 stars
+      case 4:
+        foodRatingDiv.append(
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("fas fa-star-half-alt"),
+          $("<i>").addClass("far fa star")
+        );
+        break;
+      // case 5 = 5 stars
+      case 5:
+        foodRatingDiv.append(
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("fas fa-star-half-alt"),
+          $("<i>").addClass("far fa star")
+        );
+    }
   }
 }
-<<<<<<< HEAD
->>>>>>> hannah food api
-=======
->>>>>>> cffdcc133aa110556d7b42b3b8379381ebf16a27
