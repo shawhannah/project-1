@@ -28,6 +28,7 @@ submitButton.on("click", function(e) {
 
     formatWebpage();
 <<<<<<< HEAD
+<<<<<<< HEAD
     $("#zipcode-alert").css("display", "block");
     $("#main-grid").css("min-height", "calc(100vh - 80px)");
     movieDiv.css("display", "grid");
@@ -38,6 +39,9 @@ submitButton.on("click", function(e) {
 =======
     // ajax call for movies
 >>>>>>> hannah food api
+=======
+    // ajax call for movies
+>>>>>>> cffdcc133aa110556d7b42b3b8379381ebf16a27
     $.ajax({
       url: "https://api.themoviedb.org/3/movie/now_playing",
       data: {
@@ -219,6 +223,7 @@ function showMovies(array) {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Login & Password Functionality
 if (localStorage.getItem("login") !== null) {
   console.log(localStorage.getItem("login").length);
@@ -313,6 +318,8 @@ $(document).on("click", "#signIn", function(e) {
     });
 });
 =======
+=======
+>>>>>>> cffdcc133aa110556d7b42b3b8379381ebf16a27
 // Function for getting Zomato API data
 function showFood(array) {
   zomatoDiv.empty();
@@ -328,4 +335,7 @@ function showFood(array) {
     // If not rated, show No Rating
   }
 }
+<<<<<<< HEAD
 >>>>>>> hannah food api
+=======
+>>>>>>> cffdcc133aa110556d7b42b3b8379381ebf16a27
