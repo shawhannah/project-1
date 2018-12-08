@@ -24,11 +24,23 @@
       href="https://fonts.googleapis.com/css?family=Lobster+Two|Medula+One|Grand+Hotel|Quicksand:400,700"
       rel="stylesheet"
     />
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
   </head>
 
   <body>
     <div id="sticky-footer">
+
+      <form id="userLogin">
+        Login:<br />
+        <input id="login" type="text" name="login" /> <br />
+        Password:<br />
+        <input id="password" type="text" name="password" /> <br /><br />
+        <button id="signIn">Sign in</button>
+        <button id="register">Register</button>
+      </form>
+
       <p id="zipcode-alert">Results found for: <span id="zipcode"></span></p>
+
       <main id="main-grid">
         <div id="moviedb-div"></div>
 
