@@ -196,12 +196,16 @@ function showMovies(array) {
       .text("Check Availability");
     movieAvailabilityLink.append(movieAvailability);
 
+    var addFavButton = $("<button>+</button>");
+    addFavButton.attr("id", "addToFav");
+
     movieInnerDiv.append(
       moviePosterLink,
       movieScoreDiv,
       movieTitle,
       movieReleaseDate,
-      movieAvailabilityLink
+      movieAvailabilityLink,
+      addFavButton
     );
     movieDiv.append(movieInnerDiv);
   }
@@ -253,16 +257,33 @@ $("#register").on("click", function(e) {
       .val()
       .trim() !== ""
   ) {
-    database.ref("users").push({
-      login: $("#login")
-        .val()
-        .trim(),
-      password: $("#password")
-        .val()
-        .trim()
-    });
-    setLocalStorage();
-    formatWebpage();
+    database
+      .ref("users")
+      .orderByChild("login")
+      .equalTo($("#login").val())
+      .once("value", function(snapshot) {
+        var key;
+
+        snapshot.forEach(function(childSnapshot) {
+          key = childSnapshot.key;
+          return true;
+        });
+
+        if (key) {
+          swal("Sorry, this name is already taken. Choose another one.");
+        } else {
+          database.ref("users").push({
+            login: $("#login")
+              .val()
+              .trim(),
+            password: $("#password")
+              .val()
+              .trim()
+          });
+          setLocalStorage();
+          formatWebpage();
+        }
+      });
   } else {
     swal("The username or password is missing."); // SweetAlert.js
   }
@@ -284,7 +305,6 @@ $(document).on("click", "#signIn", function(e) {
     .ref("users")
     .orderByChild("login")
     .equalTo(login)
-    .limitToLast(1)
     .on("value", function(snapshot) {
       console.log(snapshot.val());
       if (snapshot.val() === null) {
@@ -300,3 +320,4 @@ $(document).on("click", "#signIn", function(e) {
       }
     });
 });
+// add movie card to your account
