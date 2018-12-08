@@ -242,6 +242,19 @@ border-bottom: solid rgb(213, 53, 62, 0.8) 5px; */
   text-decoration: none;
 }
 
+.addToFav {
+  position: absolute;
+  bottom: 167px;
+  left: 12px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.addToFav:hover {
+  transform: rotate(360deg);
+  transition: 1s;
+}
+
 /* Search-Div -> Search Bar Styling */
 #location-finder {
   height: 40px;
