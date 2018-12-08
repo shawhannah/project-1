@@ -203,3 +203,73 @@ function showMovies(array) {
     movieDiv.append(movieInnerDiv);
   }
 }
+
+// login and password
+if (localStorage.getItem("login").length > 0) {
+  console.log(localStorage.getItem("login").length);
+  showUserName();
+}
+
+var config = {
+  apiKey: "AIzaSyD3_PKioxYnnZv67H5XrE5iQxpSbVNOzPc",
+  authDomain: "cinegrub-c849c.firebaseapp.com",
+  databaseURL: "https://cinegrub-c849c.firebaseio.com",
+  projectId: "cinegrub-c849c",
+  storageBucket: "cinegrub-c849c.appspot.com",
+  messagingSenderId: "893203931783"
+};
+firebase.initializeApp(config);
+var database = firebase.database();
+
+function showUserName() {
+  $("#userLogin").css("display", "none");
+  var userName = $("<div>").addClass("userName");
+  userName.text("Welcome, " + localStorage.getItem("login"));
+  var signOut = $("<button>Sign Out</button>").attr("id", "signOut");
+  var showMyCards = $(
+    "<a href='cards.html'target='_blank'>Show my cards</a>"
+  ).attr("id", "myCards");
+  $("#sticky-footer").prepend(userName, showMyCards, signOut);
+  $("#login").val("");
+  $("#password").val("");
+}
+
+function setLocalStorage() {
+  localStorage.setItem("login", $("#login").val());
+  showUserName();
+}
+
+$("#register").on("click", function(event) {
+  event.preventDefault();
+  database.ref("users").push({
+    login: $("#login").val(),
+    password: $("#password").val()
+  });
+  setLocalStorage();
+});
+
+$(document).on("click", "#signOut", function() {
+  $("#userLogin").css("display", "block");
+  $(".userName").remove();
+  $("#signOut").remove();
+  $("#myCards").remove();
+});
+
+$(document).on("click", "#signIn", function(event) {
+  event.preventDefault();
+  var login = $("#login").val();
+  var password = $("#password").val();
+  database
+    .ref("users")
+    .orderByChild("login")
+    .equalTo(login)
+    .limitToLast(1)
+    .on("value", function(snapshot) {
+      var key = Object.keys(snapshot.val());
+      var db_login = snapshot.val()[key].login;
+      var db_password = snapshot.val()[key].password;
+      if (db_password === password && db_login === login) {
+        setLocalStorage();
+      }
+    });
+});
