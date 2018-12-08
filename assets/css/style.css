@@ -341,7 +341,7 @@ border-bottom: solid rgb(213, 53, 62, 0.8) 5px; */
   font-size: 50px;
   font-family: "Grand Hotel", cursive;
   text-align: center;
-  margin-top: 25px;
+  margin-top: -15px;
 }
 
 /* Zomato-Div -> Zomato API Styling */
