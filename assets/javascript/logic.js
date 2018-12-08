@@ -47,6 +47,7 @@ submitButton.on("click", function(e) {
 // This function reformats landing page
 function formatWebpage() {
   $("#zipcode-alert").css("display", "block");
+  $("#userLogin").css("display", "none");
   movieDiv.css("display", "grid");
   zomatoDiv.css("display", "grid");
   $("#search-div").css("grid-row", "2 / span 1");
@@ -206,8 +207,8 @@ function showMovies(array) {
   }
 }
 
-// login and password
-if (localStorage.getItem("login").length > 0) {
+// Login & Password Functionality
+if (localStorage.getItem("login") !== null) {
   console.log(localStorage.getItem("login").length);
   showUserName();
 }
@@ -225,52 +226,73 @@ var database = firebase.database();
 
 function showUserName() {
   $("#userLogin").css("display", "none");
-  var userName = $("<div>").addClass("userName");
-  userName.text("Welcome, " + localStorage.getItem("login"));
-  var signOut = $("<button>Sign Out</button>").attr("id", "signOut");
-  var showMyCards = $(
-    "<a href='cards.html'target='_blank'>Show my cards</a>"
-  ).attr("id", "myCards");
-  $("#sticky-footer").prepend(userName, showMyCards, signOut);
+  $("#dropdownMenuButton").text(localStorage.getItem("login"));
+  $(".dropdown").css("display", "block");
   $("#login").val("");
   $("#password").val("");
 }
 
 function setLocalStorage() {
-  localStorage.setItem("login", $("#login").val());
+  localStorage.setItem(
+    "login",
+    $("#login")
+      .val()
+      .trim()
+  );
   showUserName();
 }
 
-$("#register").on("click", function(event) {
-  event.preventDefault();
-  database.ref("users").push({
-    login: $("#login").val(),
-    password: $("#password").val()
-  });
-  setLocalStorage();
+$("#register").on("click", function(e) {
+  e.preventDefault();
+  if (
+    $("#login")
+      .val()
+      .trim() !== "" &&
+    $("#password")
+      .val()
+      .trim() !== ""
+  ) {
+    database.ref("users").push({
+      login: $("#login")
+        .val()
+        .trim(),
+      password: $("#password")
+        .val()
+        .trim()
+    });
+    setLocalStorage();
+  } else {
+    swal("The username or password is missing."); // SweetAlert.js
+  }
 });
 
 $(document).on("click", "#signOut", function() {
-  $("#userLogin").css("display", "block");
-  $(".userName").remove();
-  $("#signOut").remove();
-  $("#myCards").remove();
+  localStorage.clear();
 });
 
-$(document).on("click", "#signIn", function(event) {
-  event.preventDefault();
-  var login = $("#login").val();
-  var password = $("#password").val();
+$(document).on("click", "#signIn", function(e) {
+  e.preventDefault();
+  var login = $("#login")
+    .val()
+    .trim();
+  var password = $("#password")
+    .val()
+    .trim();
   database
     .ref("users")
     .orderByChild("login")
     .equalTo(login)
     .limitToLast(1)
     .on("value", function(snapshot) {
-      var key = Object.keys(snapshot.val());
-      var db_login = snapshot.val()[key].login;
-      var db_password = snapshot.val()[key].password;
-      if (db_password === password && db_login === login) {
+      console.log(snapshot.val());
+      if (snapshot.val() === null) {
+        swal(
+          "The email or phone number you’ve entered doesn’t match any account."
+        );
+      } else {
+        var key = Object.keys(snapshot.val());
+        var db_login = snapshot.val()[key].login;
+        var db_password = snapshot.val()[key].password;
         setLocalStorage();
       }
     });

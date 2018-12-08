@@ -6,25 +6,21 @@ body {
 #main-grid {
   display: grid;
   grid-auto-rows: 3fr 1fr 3fr;
-  min-height: 100vh;
+  min-height: 78vh;
 }
 
 #zipcode-alert {
-  background: rgb(23, 23, 23);
+  position: absolute;
   color: white;
-  font-size: 19px;
-  width: 187px;
+  font-size: 16px;
   padding: 10px;
-  padding-left: 12px;
-  position: fixed;
-  z-index: 3;
-  border-radius: 5px;
-  top: -4px;
-  left: -4px;
   font-family: "Quicksand", sans-serif;
   font-weight: bold;
-  text-align: right;
   display: none;
+}
+
+#zipcode-alert span {
+  font-size: 19px;
 }
 
 #moviedb-div {
@@ -59,6 +55,132 @@ body {
   grid-gap: 15px;
   border-left: solid rgba(0, 0, 0, 0) 15px;
   border-right: solid rgba(0, 0, 0, 0) 15px;
+}
+
+/* User Logged Out & Signed In Styling  */
+#userLogin {
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  box-shadow: 0px 2px 15px #888;
+  background: rgb(0, 0, 0, 0.8);
+  color: white;
+  border-bottom: solid rgb(213, 53, 62, 0.8) 5px;
+}
+
+#login,
+#password {
+  margin-right: 20px;
+  margin-left: 10px;
+  outline: none;
+  color: rgb(74, 80, 86);
+  font-size: 16px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#user-input,
+#user-input:hover,
+#user-input:focus,
+#user-input:active,
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px white inset;
+  -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+#signIn,
+#register {
+  color: rgb(213, 53, 62, 0.8);
+  font-weight: bold;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.13);
+  margin-right: 20px;
+}
+
+/* background: rgb(0, 0, 0, 0.8);
+color: rgba(255, 255, 255, 0.5);
+border-bottom: solid rgb(213, 53, 62, 0.8) 5px; */
+
+.dropdown {
+  display: none;
+  position: relative;
+}
+
+#dropdownMenuButton {
+  width: 100%;
+  margin: 0;
+  border-radius: initial;
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-family: "Quicksand", sans-serif;
+  box-shadow: 0px 2px 15px #888;
+  border: none;
+  background: rgb(0, 0, 0, 0.8);
+  color: white;
+  border-bottom: solid rgb(213, 53, 62, 0.8) 5px;
+  padding-top: 3px;
+  padding-right: 45px;
+}
+
+.dropdown-menu {
+  top: -2px !important;
+  border-top-left-radius: initial;
+  border-top-right-radius: initial;
+  left: initial !important;
+  right: 15px !important;
+  background: black;
+}
+
+.dropdown-item {
+  color: white;
+}
+
+.fa-user {
+  font-size: 28px;
+  display: flex;
+  position: absolute;
+  justify-content: flex-end;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  right: 10px;
+  top: -2px;
+  color: rgb(213, 53, 62, 0.8);
+}
+
+.dropdown-toggle::before {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+  margin-right: 5px;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.swal-button {
+  background-color: rgb(213, 53, 62, 0.8);
+}
+
+.swal-button:not([disabled]):hover {
+  background-color: rgb(213, 53, 62, 0.9);
 }
 
 /* Movie-Div -> MovieDB API Styling */
