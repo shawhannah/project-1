@@ -196,8 +196,11 @@ function showMovies(array) {
       .text("Check Availability");
     movieAvailabilityLink.append(movieAvailability);
 
-    var addFavButton = $("<button>+</button>");
-    addFavButton.attr("id", "addToFav");
+    var addFavButton = $("<img>").attr({
+      class: "addToFav",
+      src: "assets/images/plussymbol.png",
+      alt: "Add To Favorites Button"
+    });
 
     movieInnerDiv.append(
       moviePosterLink,
