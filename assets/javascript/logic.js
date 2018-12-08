@@ -273,7 +273,7 @@ $("#register").on("click", function(e) {
         });
 
         if (key) {
-          swal("Sorry, this name is already taken. Choose another one.");
+          swal("Sorry, this username has already been taken.");
         } else {
           database.ref("users").push({
             login: $("#login")
@@ -288,7 +288,7 @@ $("#register").on("click", function(e) {
         }
       });
   } else {
-    swal("The username or password is missing."); // SweetAlert.js
+    swal("A username and password is required for registration.");
   }
 });
 
@@ -312,7 +312,7 @@ $(document).on("click", "#signIn", function(e) {
       console.log(snapshot.val());
       if (snapshot.val() === null) {
         swal(
-          "The email or phone number you’ve entered doesn’t match any account."
+          "An error has occured while attempting to log in. Please try again."
         );
       } else {
         var key = Object.keys(snapshot.val());
@@ -323,4 +323,3 @@ $(document).on("click", "#signIn", function(e) {
       }
     });
 });
-// add movie card to your account
