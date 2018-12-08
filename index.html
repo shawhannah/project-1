@@ -29,17 +29,31 @@
 
   <body>
     <div id="sticky-footer">
-
       <form id="userLogin">
-        Login:<br />
-        <input id="login" type="text" name="login" /> <br />
-        Password:<br />
-        <input id="password" type="text" name="password" /> <br /><br />
-        <button id="signIn">Sign in</button>
+        Username: <input id="login" type="text" name="login" /> Password:
+        <input id="password" type="text" name="password" />
+        <button id="signIn">Log In</button>
         <button id="register">Register</button>
       </form>
 
-      <p id="zipcode-alert">Results found for: <span id="zipcode"></span></p>
+      <div class="dropdown">
+        <p id="zipcode-alert">Results found for: <span id="zipcode"></span></p>
+        <i class="fas fa-user"></i>
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        ></button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="cards.html" target="_blank"
+            >Current Plans</a
+          >
+          <a class="dropdown-item" href="index.html" id="signOut">Sign Out</a>
+        </div>
+      </div>
 
       <main id="main-grid">
         <div id="moviedb-div"></div>
@@ -163,6 +177,20 @@
       integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
       crossorigin="anonymous"
     ></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script rel="javascript" src="assets/javascript/logic.js"></script>
   </body>
