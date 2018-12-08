@@ -20,13 +20,18 @@ submitButton.on("click", function(e) {
     searchDiv.append(errorMessage.slideDown());
   } else {
     errorMessage.slideUp();
-    errorMessage.css("margin-left", "103px");
     zipcode = userInput.val().trim();
     $("#zipcode").text(zipcode);
     userInput.val("");
     console.log("var zipcode = " + zipcode);
 
     formatWebpage();
+    $("#zipcode-alert").css("display", "block");
+    $("#main-grid").css("min-height", "calc(100vh - 80px)");
+    movieDiv.css("display", "grid");
+    zomatoDiv.css("display", "grid");
+    $("#search-div").css("grid-row", "2 / span 1");
+    $("footer").css("display", "flex");
 
     $.ajax({
       url: "https://api.themoviedb.org/3/movie/now_playing",
@@ -46,16 +51,11 @@ submitButton.on("click", function(e) {
 
 // This function reformats landing page
 function formatWebpage() {
-  $("#zipcode-alert").css("display", "block");
   $("#userLogin").css("display", "none");
-  movieDiv.css("display", "grid");
-  zomatoDiv.css("display", "grid");
-  $("#search-div").css("grid-row", "2 / span 1");
-  $("#main-grid").css("min-height", "calc(100vh - 80px)");
+  $("#search-div-formatting").css("display", "flex");
   $("#cinegrub-intro").css("display", "none");
   $("#cinegrub-logo").css("display", "initial");
   $("#cinegrub-intro-logo").css("display", "none");
-  $("footer").css("display", "flex");
 }
 
 // Function for getting MovieDb API data
@@ -211,6 +211,7 @@ function showMovies(array) {
 if (localStorage.getItem("login") !== null) {
   console.log(localStorage.getItem("login").length);
   showUserName();
+  formatWebpage();
 }
 
 var config = {
@@ -261,6 +262,7 @@ $("#register").on("click", function(e) {
         .trim()
     });
     setLocalStorage();
+    formatWebpage();
   } else {
     swal("The username or password is missing."); // SweetAlert.js
   }
@@ -294,6 +296,7 @@ $(document).on("click", "#signIn", function(e) {
         var db_login = snapshot.val()[key].login;
         var db_password = snapshot.val()[key].password;
         setLocalStorage();
+        formatWebpage();
       }
     });
 });
