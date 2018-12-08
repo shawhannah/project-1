@@ -251,7 +251,7 @@ border-bottom: solid rgb(213, 53, 62, 0.8) 5px; */
 }
 
 .addToFav:hover {
-  transform: rotate(360deg);
+  transform: scale(1.1);
   transition: 1s;
 }
 
