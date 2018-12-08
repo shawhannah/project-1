@@ -251,7 +251,7 @@ border-bottom: solid rgb(213, 53, 62, 0.8) 5px; */
 }
 
 #search-div-formatting {
-  display: flex;
+  display: none;
   position: relative;
   align-items: center;
   justify-content: center;
@@ -326,7 +326,7 @@ border-bottom: solid rgb(213, 53, 62, 0.8) 5px; */
   margin: 0;
   position: absolute;
   bottom: 19px;
-  margin-left: -50px;
+  margin-left: 103px;
   font-size: 11px;
   color: white;
   padding: 3px 10px;
