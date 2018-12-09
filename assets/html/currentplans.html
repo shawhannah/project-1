@@ -81,7 +81,20 @@
 
       <main>
         <p class="cardText">My favourite movie and restaurant:</p>
+        <div class="invitationForm">
+          <select class="friendList">
+            <option>Choose a friend</option>
+          </select>
+          <label for="time">When do you meet: </label>
+          <input id="time" type="time" />
+          <label for="time">Where do you meet: </label>
+          <input id="address" type="text" placeholder="address" />
+        </div>
         <div id="favCard"></div>
+        <button id="sendInvitation">Send to Friend</button>
+        <button id="removeInvitation">Remove invitation</button>
+        <p class="cardText">See your invitations here:</p>
+        <div id="invitation"></div>
         <div id="templateMovie">
           <div class="movie-divs-template">
             <a

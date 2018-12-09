@@ -423,3 +423,73 @@ $("#clearFavCard").on("click", function() {
   $("#favCard").empty();
   localStorage.removeItem("movieCard");
 });
+
+// send card to a friend
+database
+  .ref("users")
+  .orderByChild("login")
+  .once("value", function(snapshot) {
+    var key;
+
+    snapshot.forEach(function(childSnapshot) {
+      key = childSnapshot.key;
+      var option = $("<option>" + snapshot.val()[key].login + "</option>");
+      $(".friendList").append(option);
+    });
+  });
+
+$("#sendInvitation").on("click", function() {
+  if (
+    $("option").text() === "Choose a friend" ||
+    $("#time").val() === "" ||
+    $("#address").val() === ""
+  ) {
+    swal("Please, fill in time, address and choose a friend from the list");
+  } else {
+    database.ref("invitations").push({
+      from: localStorage.getItem("login"),
+      to: $(".friendList")
+        .find(":selected")
+        .text(),
+      time: $("#time").val(),
+      address: $("#address").val(),
+      movie: localStorage.getItem("movieCard")
+    });
+    swal("An invitation has been sent to your friend");
+    $("#time").val("");
+    $("#address").val("");
+    $(".friendList").prop("selectedIndex", 0);
+  }
+});
+
+database
+  .ref("invitations")
+  .orderByChild("to")
+  .equalTo(localStorage.getItem("login"))
+  .on("value", function(snapshot) {
+    var key = Object.keys(snapshot.val());
+    $("#removeInvitation").data("id", key);
+    console.log(snapshot.val()[key].movie);
+    var invText = $("<p>").text(
+      "Hi! It is " +
+        snapshot.val()[key].from +
+        ". Let's meet at " +
+        snapshot.val()[key].address +
+        " at " +
+        snapshot.val()[key].time +
+        ". See you there!"
+    );
+    var parsedObj = JSON.parse(snapshot.val()[key].movie);
+    var movieCardInv = $(".movie-divs-template");
+    movieCardInv.find("a:first").attr("href", parsedObj.link);
+    movieCardInv.find("img:first").attr("src", parsedObj.poster);
+    movieCardInv.find(".movie-ratings").html(parsedObj.rate);
+    movieCardInv.find(".movie-titles").text(parsedObj.title);
+    movieCardInv.find(".release-dates").text(parsedObj.release);
+    $("#invitation").append(invText, movieCardInv);
+  });
+$("#removeInvitation").on("click", function() {
+  $("#invitation").empty();
+  var id = $(this).data("id");
+  database.ref("invitations/" + id).remove();
+});
