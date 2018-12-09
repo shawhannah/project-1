@@ -29,10 +29,36 @@
 
   <body>
     <div id="sticky-footer">
-      <h2>I am going to watch this movie:</h2>
-      <h2>I would like to have a dinner here:</h2>
+      <p class="cardText">My favourite movie and restaurant:</p>
+      <div id="favCard"></div>
     </div>
-
+    <div id="templateMovie">
+      <div class="movie-divs">
+        <a
+          href="https://www.fandango.com/search?q=Fantastic Beasts: The Crimes of Grindelwald&amp;mode=general"
+          target="_blank"
+          ><img
+            src="https://image.tmdb.org/t/p/w200//uyJgTzAsp3Za2TaPiZt2yaKYRIR.jpg"
+            alt="Movie Poster of Fantastic Beasts: The Crimes of Grindelwald"
+            class="movie-posters"
+        /></a>
+        <div class="movie-ratings">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i
+          ><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i
+          ><i class="far fa-star"></i>
+        </div>
+        <p class="movie-titles">Fantastic Beasts: The Crimes of Grindelwald</p>
+        <p class="release-dates">Released 2018-11-14</p>
+        <a href="https://www.fandango.com/27540_movietimes" target="_blank"
+          ><p class="check-availability">Check Availability</p></a
+        ><img
+          class="addToFavMovie"
+          src="assets/images/plussymbol.png"
+          alt="Add To Favorites Button"
+          style="visibility: hidden;"
+        />
+      </div>
+    </div>
     <footer>
       &copy Copyright 2018 - CineGrub, LLC.
       <img

@@ -2,7 +2,6 @@
 var zipcode;
 var movieArr;
 var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-
 // DOM Reference Variables
 var submitButton = $("#submit-button");
 var userInput = $("#user-input");
@@ -23,7 +22,6 @@ submitButton.on("click", function(e) {
     zipcode = userInput.val().trim();
     $("#zipcode").text(zipcode);
     userInput.val("");
-    console.log("var zipcode = " + zipcode);
 
     formatWebpage();
     $("#zipcode-alert").css("display", "block");
@@ -196,8 +194,11 @@ function showMovies(array) {
       .text("Check Availability");
     movieAvailabilityLink.append(movieAvailability);
 
-    var addFavButton = $("<button>+</button>");
-    addFavButton.attr("id", "addToFav");
+    var addFavButton = $("<img>").attr({
+      class: "addToFavMovie",
+      src: "assets/images/plussymbol.png",
+      alt: "Add To Favorites Button"
+    });
 
     movieInnerDiv.append(
       moviePosterLink,
@@ -213,7 +214,6 @@ function showMovies(array) {
 
 // Login & Password Functionality
 if (localStorage.getItem("login") !== null) {
-  console.log(localStorage.getItem("login").length);
   showUserName();
   formatWebpage();
 }
@@ -315,9 +315,66 @@ $(document).on("click", "#signIn", function(e) {
         var key = Object.keys(snapshot.val());
         var db_login = snapshot.val()[key].login;
         var db_password = snapshot.val()[key].password;
-        setLocalStorage();
-        formatWebpage();
+        if (db_login === login && db_password === password) {
+          setLocalStorage();
+          formatWebpage();
+        } else {
+          swal("Password is incorrect.");
+        }
       }
     });
 });
 // add movie card to your account
+
+var addedMovieCard;
+
+$(document).on("click", ".addToFavMovie", function() {
+  var movieCard = {
+    link: $(this)
+      .parent(".movie-divs")
+      .find("a")
+      .attr("href"),
+    poster: $(this)
+      .closest(".movie-divs")
+      .find("img")
+      .attr("src"),
+    rate: $(this)
+      .closest(".movie-divs")
+      .find(".movie-ratings")
+      .html(),
+    title: $(this)
+      .closest(".movie-divs")
+      .find(".movie-titles")
+      .html(),
+    release: $(this)
+      .closest(".movie-divs")
+      .find(".release-dates")
+      .text()
+  };
+
+  localStorage.setItem("movieCard", JSON.stringify(movieCard));
+  console.log(localStorage.getItem("movieCard"));
+  $(".addToFavMovie").css("visibility", "hidden");
+});
+
+if (localStorage.getItem("movieCard") !== null) {
+  addedMovieCard = JSON.parse(localStorage.getItem("movieCard"));
+  console.log(addedMovieCard);
+  var templateCardMovie = $("#templateMovie");
+  renderMovieCard(templateCardMovie);
+}
+
+function renderMovieCard(template) {
+  var removeButton = $("<button>X</button>");
+  removeButton.attr("id", "clearFavCard");
+  template.find("a:first").attr("href", addedMovieCard.link);
+  template.find("img:first").attr("src", addedMovieCard.poster);
+  template.find(".movie-ratings").html(addedMovieCard.rate);
+  template.find(".movie-titles").text(addedMovieCard.title);
+  template.find(".release-dates").text(addedMovieCard.release);
+  $("#favCard").append(template.html(), removeButton);
+}
+$("#clearFavCard").on("click", function() {
+  $("#favCard").empty();
+  localStorage.removeItem("movieCard");
+});
