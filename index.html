@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>CineGrub</title>
+    <title id="head-title">CineGrub - Log In or Sign Up</title>
 
     <link
       rel="stylesheet"
@@ -20,6 +20,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/preloader.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Lobster+Two|Medula+One|Grand+Hotel|Quicksand:400,700"
       rel="stylesheet"
@@ -28,32 +29,55 @@
   </head>
 
   <body>
-    <div id="sticky-footer">
-      <form id="userLogin">
-        Username: <input id="login" type="text" name="login" /> Password:
-        <input id="password" type="text" name="password" />
-        <button id="signIn">Log In</button>
-        <button id="register">Register</button>
-      </form>
-
-      <div class="dropdown">
-        <p id="zipcode-alert">Results found for: <span id="zipcode"></span></p>
-        <i class="fas fa-user"></i>
-        <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          id="dropdownMenuButton"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        ></button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="cards.html" target="_blank"
-            >Current Plans</a
-          >
-          <a class="dropdown-item" href="index.html" id="signOut">Sign Out</a>
-        </div>
+    <div id="preloader">
+      <div class="sk-circle">
+        <div class="sk-circle1 sk-child"></div>
+        <div class="sk-circle2 sk-child"></div>
+        <div class="sk-circle3 sk-child"></div>
+        <div class="sk-circle4 sk-child"></div>
+        <div class="sk-circle5 sk-child"></div>
+        <div class="sk-circle6 sk-child"></div>
+        <div class="sk-circle7 sk-child"></div>
+        <div class="sk-circle8 sk-child"></div>
+        <div class="sk-circle9 sk-child"></div>
+        <div class="sk-circle10 sk-child"></div>
+        <div class="sk-circle11 sk-child"></div>
+        <div class="sk-circle12 sk-child"></div>
       </div>
+    </div>
+
+    <div id="sticky-footer">
+      <header>
+        <form id="userLogin">
+          Username: <input id="login" type="text" name="login" /> Password:
+          <input id="password" type="text" name="password" />
+          <button id="signIn">Log In</button>
+          <button id="register">Register</button>
+        </form>
+
+        <div class="dropdown">
+          <p id="zipcode-alert">
+            Results found for: <span id="zipcode"></span>
+          </p>
+          <i class="fas fa-user"></i>
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          ></button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="index.html">Home</a>
+            <a class="dropdown-item" href="assets/html/currentplans.html"
+              >Current Plans</a
+            >
+            <a class="dropdown-item" href="assets/html/faq.html">FAQ</a>
+            <a class="dropdown-item" href="index.html" id="signOut">Sign Out</a>
+          </div>
+        </div>
+      </header>
 
       <main id="main-grid">
         <div id="moviedb-div"></div>
@@ -80,7 +104,14 @@
               </button>
             </div>
           </form>
-          <p id="cinegrub-intro">where movies and restaurants come together</p>
+
+          <h1 id="cinegrub-intro" class="ml9">
+            <span class="text-wrapper">
+              <span class="letters"
+                >where movies and restaurants come together</span
+              >
+            </span>
+          </h1>
         </div>
 
         <div id="zomato-div">
@@ -191,6 +222,8 @@
     ></script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 
     <script rel="javascript" src="assets/javascript/logic.js"></script>
   </body>

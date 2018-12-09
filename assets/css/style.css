@@ -6,7 +6,7 @@ body {
 #main-grid {
   display: grid;
   grid-auto-rows: 3fr 1fr 3fr;
-  min-height: 78vh;
+  min-height: calc(100vh - 50px);
 }
 
 #zipcode-alert {
@@ -103,10 +103,6 @@ input:-webkit-autofill:active {
   background: rgba(255, 255, 255, 0.13);
   margin-right: 20px;
 }
-
-/* background: rgb(0, 0, 0, 0.8);
-color: rgba(255, 255, 255, 0.5);
-border-bottom: solid rgb(213, 53, 62, 0.8) 5px; */
 
 .dropdown {
   display: none;
@@ -242,6 +238,19 @@ border-bottom: solid rgb(213, 53, 62, 0.8) 5px; */
   text-decoration: none;
 }
 
+.addToFav {
+  position: absolute;
+  bottom: 167px;
+  left: 12px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.addToFav:hover {
+  transform: scale(1.1);
+  transition: 1s;
+}
+
 /* Search-Div -> Search Bar Styling */
 #location-finder {
   height: 40px;
@@ -342,6 +351,7 @@ border-bottom: solid rgb(213, 53, 62, 0.8) 5px; */
   font-family: "Grand Hotel", cursive;
   text-align: center;
   margin-top: -15px;
+  visibility: hidden;
 }
 
 /* Zomato-Div -> Zomato API Styling */
@@ -434,10 +444,12 @@ footer {
   position: relative;
   border-top: solid rgb(213, 53, 62, 0.8) 5px;
 }
+
 /* cards.html*/
 #templateMovie {
   display: none;
 }
+
 #favCard {
   display: grid;
   grid-row: 1;
@@ -448,6 +460,7 @@ footer {
   justify-content: flex-start;
   background-color: rgba(255, 255, 255, 0.438);
 }
+
 .cardText {
   color: white;
   font-size: 16px;
@@ -455,6 +468,7 @@ footer {
   font-family: "Quicksand", sans-serif;
   font-weight: bold;
 }
+
 #clearFavCard {
   position: absolute;
   top: 0;
@@ -463,4 +477,26 @@ footer {
   height: 30px;
   text-align: center;
   justify-items: center;
+}
+
+/* Animate.js Styling */
+.ml9 {
+  position: relative;
+  font-weight: 200;
+  font-size: 4em;
+}
+
+.ml9 .text-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-top: 0.2em;
+  padding-right: 0.05em;
+  padding-bottom: 0.1em;
+  overflow: hidden;
+}
+
+.ml9 .letter {
+  transform-origin: 50% 100%;
+  display: inline-block;
+  line-height: 1em;
 }
