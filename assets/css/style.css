@@ -238,7 +238,7 @@ input:-webkit-autofill:active {
   text-decoration: none;
 }
 
-.addToFav {
+.addToFavMovie {
   position: absolute;
   bottom: 167px;
   left: 12px;
@@ -246,7 +246,7 @@ input:-webkit-autofill:active {
   cursor: pointer;
 }
 
-.addToFav:hover {
+.addToFavMovie:hover {
   transform: scale(1.1);
   transition: 1s;
 }
@@ -451,6 +451,7 @@ footer {
 }
 
 #favCard {
+  height: 420px;
   display: grid;
   grid-row: 1;
   grid-column: 1;
@@ -458,7 +459,12 @@ footer {
   position: relative;
   grid-gap: 30px;
   justify-content: flex-start;
-  background-color: rgba(255, 255, 255, 0.438);
+  background-color: rgba(0, 0, 0, 0.438);
+  padding: 15px;
+}
+.movie-divs-template {
+  position: relative;
+  height: 410px;
 }
 
 .cardText {

@@ -213,7 +213,7 @@ function showMovies(array) {
     movieAvailabilityLink.append(movieAvailability);
 
     var addFavButton = $("<img>").attr({
-      class: "addToFav",
+      class: "addToFavMovie",
       src: "assets/images/plussign.jpg",
       alt: "Add To Favorites Button"
     });
@@ -373,7 +373,7 @@ anime.timeline({ loop: false }).add({
 
 var addedMovieCard;
 
-$(document).on("click", ".addToFav", function() {
+$(document).on("click", ".addToFavMovie", function() {
   var movieCard = {
     link: $(this)
       .parent(".movie-divs")
