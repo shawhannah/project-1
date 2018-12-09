@@ -13,44 +13,60 @@ var errorMessage = $("<p>")
 var movieDiv = $("#moviedb-div");
 var zomatoDiv = $("#zomato-div");
 
+// Everytime a page is refreshed or entered, the preloader will activate
+$(window).on("load", function() {
+  $("#preloader").css("display", "none");
+});
+
+// The function will create a loader screen to allow the DOM to load uninterrupted for 1s
+function preloader() {
+  $("#preloader").css("display", "flex");
+  setTimeout(function() {
+    $("#preloader").css("display", "none");
+  }, 1000);
+}
+
 // Submit Button with Zip Code Validation
 submitButton.on("click", function(e) {
   e.preventDefault();
-  if (!isValidZip.test(userInput.val().trim())) {
-    searchDiv.append(errorMessage.slideDown());
-  } else {
-    errorMessage.slideUp();
-    zipcode = userInput.val().trim();
-    $("#zipcode").text(zipcode);
-    userInput.val("");
-    console.log("var zipcode = " + zipcode);
+  preloader();
+  setTimeout(function() {
+    if (!isValidZip.test(userInput.val().trim())) {
+      searchDiv.append(errorMessage.slideDown());
+    } else {
+      errorMessage.slideUp();
+      zipcode = userInput.val().trim();
+      $("#zipcode").text(zipcode);
+      userInput.val("");
 
-    formatWebpage();
-    $("#zipcode-alert").css("display", "block");
-    $("#main-grid").css("min-height", "calc(100vh - 80px)");
-    movieDiv.css("display", "grid");
-    zomatoDiv.css("display", "grid");
-    $("#search-div").css("grid-row", "2 / span 1");
-    $("footer").css("display", "flex");
+      formatWebpage();
+      $("#zipcode-alert").css("display", "block");
+      $("#main-grid").css("min-height", "calc(100vh - 80px)");
+      movieDiv.css("display", "grid");
+      zomatoDiv.css("display", "grid");
+      $("#search-div").css("grid-row", "2 / span 1");
+      $("footer").css("display", "flex");
 
-    $.ajax({
-      url: "https://api.themoviedb.org/3/movie/now_playing",
-      data: {
-        api_key: "b9a61052b8eb1f78c85667deffc9b7aa",
-        language: "en-US",
-        region: "us",
-        page: "1"
-      },
-      method: "GET"
-    }).then(function(response) {
-      movieArr = response.results;
-      showMovies(movieArr);
-    });
-  }
+      $.ajax({
+        url: "https://api.themoviedb.org/3/movie/now_playing",
+        data: {
+          api_key: "b9a61052b8eb1f78c85667deffc9b7aa",
+          language: "en-US",
+          region: "us",
+          page: "1"
+        },
+        method: "GET"
+      }).then(function(response) {
+        movieArr = response.results;
+        showMovies(movieArr);
+      });
+    }
+  }, 1000);
 });
 
 // This function reformats landing page
 function formatWebpage() {
+  $("#head-title").text("CineGrub");
   $("#userLogin").css("display", "none");
   $("#search-div-formatting").css("display", "flex");
   $("#cinegrub-intro").css("display", "none");
@@ -216,7 +232,6 @@ function showMovies(array) {
 
 // Login & Password Functionality
 if (localStorage.getItem("login") !== null) {
-  console.log(localStorage.getItem("login").length);
   showUserName();
   formatWebpage();
 }
@@ -275,16 +290,19 @@ $("#register").on("click", function(e) {
         if (key) {
           swal("Sorry, this username has already been taken.");
         } else {
-          database.ref("users").push({
-            login: $("#login")
-              .val()
-              .trim(),
-            password: $("#password")
-              .val()
-              .trim()
-          });
-          setLocalStorage();
-          formatWebpage();
+          preloader();
+          setTimeout(function() {
+            database.ref("users").push({
+              login: $("#login")
+                .val()
+                .trim(),
+              password: $("#password")
+                .val()
+                .trim()
+            });
+            setLocalStorage();
+            formatWebpage();
+          }, 1000);
         }
       });
   } else {
@@ -309,17 +327,40 @@ $(document).on("click", "#signIn", function(e) {
     .orderByChild("login")
     .equalTo(login)
     .on("value", function(snapshot) {
-      console.log(snapshot.val());
-      if (snapshot.val() === null) {
+      if (snapshot.val() === null || login === "") {
         swal(
           "An error has occured while attempting to log in. Please try again."
         );
       } else {
-        var key = Object.keys(snapshot.val());
-        var db_login = snapshot.val()[key].login;
-        var db_password = snapshot.val()[key].password;
-        setLocalStorage();
-        formatWebpage();
+        preloader();
+        setTimeout(function() {
+          var key = Object.keys(snapshot.val());
+          var db_login = snapshot.val()[key].login;
+          var db_password = snapshot.val()[key].password;
+          setLocalStorage();
+          formatWebpage();
+        }, 1000);
       }
     });
+});
+
+// ANIMEjs - Wraps every letter in a span to animate each one individually
+$("#cinegrub-intro").css("visibility", "visible");
+
+$(".ml9 .letters").each(function() {
+  $(this).html(
+    $(this)
+      .text()
+      .replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>")
+  );
+});
+
+anime.timeline({ loop: false }).add({
+  targets: ".ml9 .letter",
+  scale: [0, 1],
+  duration: 1500,
+  elasticity: 600,
+  delay: function(el, i) {
+    return 45 * (i + 1);
+  }
 });
