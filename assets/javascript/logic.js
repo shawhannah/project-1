@@ -2,7 +2,6 @@
 var zipcode;
 var movieArr;
 var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-
 // DOM Reference Variables
 var submitButton = $("#submit-button");
 var userInput = $("#user-input");
@@ -29,6 +28,7 @@ function preloader() {
 // Submit Button with Zip Code Validation
 submitButton.on("click", function(e) {
   e.preventDefault();
+
   preloader();
   setTimeout(function() {
     if (!isValidZip.test(userInput.val().trim())) {
@@ -249,8 +249,8 @@ var database = firebase.database();
 
 function showUserName() {
   $("#userLogin").css("display", "none");
-  $("#dropdownMenuButton").text(localStorage.getItem("login"));
   $(".dropdown").css("display", "block");
+  $("#dropdownMenuButton").text(localStorage.getItem("login"));
   $("#login").val("");
   $("#password").val("");
 }
@@ -332,14 +332,18 @@ $(document).on("click", "#signIn", function(e) {
           "An error has occured while attempting to log in. Please try again."
         );
       } else {
-        preloader();
-        setTimeout(function() {
-          var key = Object.keys(snapshot.val());
-          var db_login = snapshot.val()[key].login;
-          var db_password = snapshot.val()[key].password;
-          setLocalStorage();
-          formatWebpage();
-        }, 1000);
+        var key = Object.keys(snapshot.val());
+        var db_login = snapshot.val()[key].login;
+        var db_password = snapshot.val()[key].password;
+        if (db_login === login && db_password === password) {
+          preloader();
+          setTimeout(function() {
+            setLocalStorage();
+            formatWebpage();
+          }, 1000);
+        } else {
+          swal("Password is incorrect.");
+        }
       }
     });
 });
@@ -363,4 +367,59 @@ anime.timeline({ loop: false }).add({
   delay: function(el, i) {
     return 45 * (i + 1);
   }
+});
+
+// add movie card to your account
+
+var addedMovieCard;
+
+$(document).on("click", ".addToFav", function() {
+  var movieCard = {
+    link: $(this)
+      .parent(".movie-divs")
+      .find("a")
+      .attr("href"),
+    poster: $(this)
+      .closest(".movie-divs")
+      .find("img")
+      .attr("src"),
+    rate: $(this)
+      .closest(".movie-divs")
+      .find(".movie-ratings")
+      .html(),
+    title: $(this)
+      .closest(".movie-divs")
+      .find(".movie-titles")
+      .html(),
+    release: $(this)
+      .closest(".movie-divs")
+      .find(".release-dates")
+      .text()
+  };
+
+  localStorage.setItem("movieCard", JSON.stringify(movieCard));
+  console.log(localStorage.getItem("movieCard"));
+  $(".addToFavMovie").css("visibility", "hidden");
+});
+
+if (localStorage.getItem("movieCard") !== null) {
+  addedMovieCard = JSON.parse(localStorage.getItem("movieCard"));
+  console.log(addedMovieCard);
+  var templateCardMovie = $("#templateMovie");
+  renderMovieCard(templateCardMovie);
+}
+
+function renderMovieCard(template) {
+  var removeButton = $("<button>X</button>");
+  removeButton.attr("id", "clearFavCard");
+  template.find("a:first").attr("href", addedMovieCard.link);
+  template.find("img:first").attr("src", addedMovieCard.poster);
+  template.find(".movie-ratings").html(addedMovieCard.rate);
+  template.find(".movie-titles").text(addedMovieCard.title);
+  template.find(".release-dates").text(addedMovieCard.release);
+  $("#favCard").append(template.html(), removeButton);
+}
+$("#clearFavCard").on("click", function() {
+  $("#favCard").empty();
+  localStorage.removeItem("movieCard");
 });

@@ -104,10 +104,6 @@ input:-webkit-autofill:active {
   margin-right: 20px;
 }
 
-/* background: rgb(0, 0, 0, 0.8);
-color: rgba(255, 255, 255, 0.5);
-border-bottom: solid rgb(213, 53, 62, 0.8) 5px; */
-
 .dropdown {
   display: none;
   position: relative;
@@ -447,6 +443,40 @@ footer {
   font-size: 18px;
   position: relative;
   border-top: solid rgb(213, 53, 62, 0.8) 5px;
+}
+
+/* cards.html*/
+#templateMovie {
+  display: none;
+}
+
+#favCard {
+  display: grid;
+  grid-row: 1;
+  grid-column: 1;
+  grid-auto-flow: column;
+  position: relative;
+  grid-gap: 30px;
+  justify-content: flex-start;
+  background-color: rgba(255, 255, 255, 0.438);
+}
+
+.cardText {
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+}
+
+#clearFavCard {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  justify-items: center;
 }
 
 /* Animate.js Styling */
