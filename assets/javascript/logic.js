@@ -2,7 +2,9 @@
 var zipcode;
 var movieArr;
 var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+
 var zomatoArr;
+
 
 // DOM Reference Variables
 var submitButton = $("#submit-button");
@@ -14,9 +16,23 @@ var errorMessage = $("<p>")
 var movieDiv = $("#moviedb-div");
 var zomatoDiv = $("#zomato-div");
 
+// Everytime a page is refreshed or entered, the preloader will activate
+$(window).on("load", function() {
+  $("#preloader").css("display", "none");
+});
+
+// The function will create a loader screen to allow the DOM to load uninterrupted for 1s
+function preloader() {
+  $("#preloader").css("display", "flex");
+  setTimeout(function() {
+    $("#preloader").css("display", "none");
+  }, 1000);
+}
+
 // Submit Button with Zip Code Validation
 submitButton.on("click", function(e) {
   e.preventDefault();
+
   if (!isValidZip.test(userInput.val().trim())) {
     searchDiv.append(errorMessage.slideDown());
   } else {
@@ -57,10 +73,47 @@ submitButton.on("click", function(e) {
       method: "GET"
     });
   }
+
+
+  preloader();
+  setTimeout(function() {
+    if (!isValidZip.test(userInput.val().trim())) {
+      searchDiv.append(errorMessage.slideDown());
+    } else {
+      errorMessage.slideUp();
+      zipcode = userInput.val().trim();
+      $("#zipcode").text(zipcode);
+      userInput.val("");
+
+      formatWebpage();
+      $("#zipcode-alert").css("display", "block");
+      $("#main-grid").css("min-height", "calc(100vh - 80px)");
+      movieDiv.css("display", "grid");
+      zomatoDiv.css("display", "grid");
+      $("#search-div").css("grid-row", "2 / span 1");
+      $("footer").css("display", "flex");
+
+      $.ajax({
+        url: "https://api.themoviedb.org/3/movie/now_playing",
+        data: {
+          api_key: "b9a61052b8eb1f78c85667deffc9b7aa",
+          language: "en-US",
+          region: "us",
+          page: "1"
+        },
+        method: "GET"
+      }).then(function(response) {
+        movieArr = response.results;
+        showMovies(movieArr);
+      });
+    }
+  }, 1000);
+
 });
 
 // This function reformats landing page
 function formatWebpage() {
+  $("#head-title").text("CineGrub");
   $("#userLogin").css("display", "none");
   $("#search-div-formatting").css("display", "flex");
   $("#cinegrub-intro").css("display", "none");
@@ -206,12 +259,19 @@ function showMovies(array) {
       .text("Check Availability");
     movieAvailabilityLink.append(movieAvailability);
 
+    var addFavButton = $("<img>").attr({
+      class: "addToFav",
+      src: "assets/images/plussign.jpg",
+      alt: "Add To Favorites Button"
+    });
+
     movieInnerDiv.append(
       moviePosterLink,
       movieScoreDiv,
       movieTitle,
       movieReleaseDate,
-      movieAvailabilityLink
+      movieAvailabilityLink,
+      addFavButton
     );
     movieDiv.append(movieInnerDiv);
   }
@@ -219,7 +279,6 @@ function showMovies(array) {
 
 // Login & Password Functionality
 if (localStorage.getItem("login") !== null) {
-  console.log(localStorage.getItem("login").length);
   showUserName();
   formatWebpage();
 }
@@ -237,8 +296,8 @@ var database = firebase.database();
 
 function showUserName() {
   $("#userLogin").css("display", "none");
-  $("#dropdownMenuButton").text(localStorage.getItem("login"));
   $(".dropdown").css("display", "block");
+  $("#dropdownMenuButton").text(localStorage.getItem("login"));
   $("#login").val("");
   $("#password").val("");
 }
@@ -263,18 +322,38 @@ $("#register").on("click", function(e) {
       .val()
       .trim() !== ""
   ) {
-    database.ref("users").push({
-      login: $("#login")
-        .val()
-        .trim(),
-      password: $("#password")
-        .val()
-        .trim()
-    });
-    setLocalStorage();
-    formatWebpage();
+    database
+      .ref("users")
+      .orderByChild("login")
+      .equalTo($("#login").val())
+      .once("value", function(snapshot) {
+        var key;
+
+        snapshot.forEach(function(childSnapshot) {
+          key = childSnapshot.key;
+          return true;
+        });
+
+        if (key) {
+          swal("Sorry, this username has already been taken.");
+        } else {
+          preloader();
+          setTimeout(function() {
+            database.ref("users").push({
+              login: $("#login")
+                .val()
+                .trim(),
+              password: $("#password")
+                .val()
+                .trim()
+            });
+            setLocalStorage();
+            formatWebpage();
+          }, 1000);
+        }
+      });
   } else {
-    swal("The username or password is missing."); // SweetAlert.js
+    swal("A username and password is required for registration.");
   }
 });
 
@@ -294,22 +373,28 @@ $(document).on("click", "#signIn", function(e) {
     .ref("users")
     .orderByChild("login")
     .equalTo(login)
-    .limitToLast(1)
     .on("value", function(snapshot) {
-      console.log(snapshot.val());
-      if (snapshot.val() === null) {
+      if (snapshot.val() === null || login === "") {
         swal(
-          "The email or phone number you’ve entered doesn’t match any account."
+          "An error has occured while attempting to log in. Please try again."
         );
       } else {
         var key = Object.keys(snapshot.val());
         var db_login = snapshot.val()[key].login;
         var db_password = snapshot.val()[key].password;
-        setLocalStorage();
-        formatWebpage();
+        if (db_login === login && db_password === password) {
+          preloader();
+          setTimeout(function() {
+            setLocalStorage();
+            formatWebpage();
+          }, 1000);
+        } else {
+          swal("Password is incorrect.");
+        }
       }
     });
 });
+
 
 // Function for getting Zomato API data
 function showFood(array) {
@@ -399,3 +484,80 @@ function showFood(array) {
    
   }
 }
+
+// ANIMEjs - Wraps every letter in a span to animate each one individually
+$("#cinegrub-intro").css("visibility", "visible");
+
+$(".ml9 .letters").each(function() {
+  $(this).html(
+    $(this)
+      .text()
+      .replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>")
+  );
+});
+
+anime.timeline({ loop: false }).add({
+  targets: ".ml9 .letter",
+  scale: [0, 1],
+  duration: 1500,
+  elasticity: 600,
+  delay: function(el, i) {
+    return 45 * (i + 1);
+  }
+});
+
+// add movie card to your account
+
+var addedMovieCard;
+
+$(document).on("click", ".addToFav", function() {
+  var movieCard = {
+    link: $(this)
+      .parent(".movie-divs")
+      .find("a")
+      .attr("href"),
+    poster: $(this)
+      .closest(".movie-divs")
+      .find("img")
+      .attr("src"),
+    rate: $(this)
+      .closest(".movie-divs")
+      .find(".movie-ratings")
+      .html(),
+    title: $(this)
+      .closest(".movie-divs")
+      .find(".movie-titles")
+      .html(),
+    release: $(this)
+      .closest(".movie-divs")
+      .find(".release-dates")
+      .text()
+  };
+
+  localStorage.setItem("movieCard", JSON.stringify(movieCard));
+  console.log(localStorage.getItem("movieCard"));
+  $(".addToFavMovie").css("visibility", "hidden");
+});
+
+if (localStorage.getItem("movieCard") !== null) {
+  addedMovieCard = JSON.parse(localStorage.getItem("movieCard"));
+  console.log(addedMovieCard);
+  var templateCardMovie = $("#templateMovie");
+  renderMovieCard(templateCardMovie);
+}
+
+function renderMovieCard(template) {
+  var removeButton = $("<button>X</button>");
+  removeButton.attr("id", "clearFavCard");
+  template.find("a:first").attr("href", addedMovieCard.link);
+  template.find("img:first").attr("src", addedMovieCard.poster);
+  template.find(".movie-ratings").html(addedMovieCard.rate);
+  template.find(".movie-titles").text(addedMovieCard.title);
+  template.find(".release-dates").text(addedMovieCard.release);
+  $("#favCard").append(template.html(), removeButton);
+}
+$("#clearFavCard").on("click", function() {
+  $("#favCard").empty();
+  localStorage.removeItem("movieCard");
+});
+
