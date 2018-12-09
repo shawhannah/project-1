@@ -314,10 +314,19 @@ $(document).on("click", "#signIn", function(e) {
 // Function for getting Zomato API data
 function showFood(array) {
   zomatoDiv.empty();
+
   for (let i in array) {
     var zomatoInnerDiv = $("<div>").addClass("restaurant-divs");
 
-    var foodName = $("div").addClass("restaurant-names");
+    var foodPlace = $("<p>")
+      .addClass("restaurant-names")
+      .text(array[i].name);
+
+    var foodInfo = $("<a>").attr({
+      href: array[i].url,
+      target: "_blank"
+      class: "more-info"
+    });
 
     var foodRatingDiv = $("<div>").addClass("restaurant-ratings");
     var foodRating = Math.round(array[i].vote_average);
@@ -381,5 +390,12 @@ function showFood(array) {
           $("<i>").addClass("far fa star")
         );
     }
+        zomatoInnerDiv.append(
+          foodPlace,
+          foodRating,
+          foodInfo, 
+
+        )
+   
   }
 }
