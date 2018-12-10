@@ -171,12 +171,26 @@ input:-webkit-autofill:active {
   display: none;
 }
 
-.swal-button {
-  background-color: rgb(213, 53, 62, 0.8);
+/* SweetAlert2 Styling */
+.swal2-popup {
+  font-size: 16px !important;
+  margin: 5px !important;
 }
 
-.swal-button:not([disabled]):hover {
-  background-color: rgb(213, 53, 62, 0.9);
+.format-swal-title {
+  font-size: 16px !important;
+}
+
+.swal2-popup .swal2-styled.swal2-confirm {
+  background-color: rgb(213, 53, 62, 0.8) !important;
+}
+
+.swal2-popup .swal2-styled.swal2-confirm:hover {
+  background-color: rgb(213, 53, 62, 0.9) !important;
+}
+
+.swal2-popup .swal2-styled:focus {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(213, 53, 62, 0.4) !important;
 }
 
 /* Movie-Div -> MovieDB API Styling */
@@ -188,6 +202,10 @@ input:-webkit-autofill:active {
 .movie-posters {
   height: 280px;
   border: dashed white 5px;
+}
+
+.movie-posters:hover {
+  filter: saturate(2);
 }
 
 .movie-ratings {
@@ -222,15 +240,20 @@ input:-webkit-autofill:active {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgb(213, 53, 62);
+  background: rgb(213, 53, 62, 0.9);
   border-radius: 5px;
   height: 35px;
-  width: 190px;
+  width: 115px;
   color: white;
   font-weight: bold;
   font-variant: all-petite-caps;
   position: absolute;
   bottom: 0;
+  left: 38px;
+}
+
+.check-availability:hover {
+  background: rgb(213, 53, 62);
 }
 
 .movie-divs a:hover {
@@ -240,15 +263,20 @@ input:-webkit-autofill:active {
 
 .addToFavMovie {
   position: absolute;
-  bottom: 167px;
-  left: 12px;
-  height: 25px;
+  bottom: 21px;
+  right: 3px;
+  width: 25px;
   cursor: pointer;
+  font-size: 25px;
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
 }
 
 .addToFavMovie:hover {
   transform: scale(1.1);
-  transition: 1s;
+  transition: 0.5s;
 }
 
 /* Search-Div -> Search Bar Styling */
@@ -356,6 +384,7 @@ input:-webkit-autofill:active {
 
 /* Zomato-Div -> Zomato API Styling */
 .restaurant-divs {
+  position: relative;
   background: slategray;
   height: 365px;
   width: 250px;
@@ -385,6 +414,12 @@ input:-webkit-autofill:active {
   background: white;
 }
 
+.no-food-ratings {
+  margin: 0;
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+}
+
 .restaurant-names {
   text-align: center;
   margin-top: 10px;
@@ -393,6 +428,9 @@ input:-webkit-autofill:active {
   font-weight: bold;
   letter-spacing: 1px;
   color: white;
+  width: 240px;
+  height: 40px;
+  overflow: scroll;
 }
 
 .more-info {
@@ -404,15 +442,95 @@ input:-webkit-autofill:active {
   color: white;
   font-weight: bold;
   margin: auto;
-  margin-top: 30px;
+  margin-top: 377px;
   width: 125px;
   letter-spacing: 2px;
   border: solid white 2px;
 }
 
+.more-info:hover {
+  background: rgb(0, 0, 0, 0.3);
+}
+
 .restaurant-divs a:hover {
   color: white;
   text-decoration: none;
+}
+
+.addToFavRestaurant {
+  color: white;
+  font-size: 30px;
+  position: absolute;
+  bottom: -55px;
+  right: 22px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.addToFavRestaurant:hover {
+  transform: scale(1.1);
+  transition: 0.5s;
+}
+
+.map-formatting {
+  height: 100%;
+  width: 100%;
+  filter: brightness(0.8);
+}
+
+.maps-marker {
+  height: 60px;
+  position: absolute;
+  top: 120px;
+  right: 93px;
+}
+
+.maps-marker:hover {
+  transform: scale(1.4);
+  top: 108px;
+  transition: 0.5s;
+}
+
+.maps-address {
+  background: #495057;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  position: absolute;
+  width: 240px;
+  bottom: 0;
+  margin: 0;
+}
+
+/* Flip Animation Styling */
+.flip-card {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: all 0.5s ease;
+  position: absolute;
+}
+
+.front-card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.back-card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+}
+
+.flip-card:hover {
+  transform: rotateY(180deg);
 }
 
 /* Sticky Footer & Footer Styling */
@@ -421,16 +539,23 @@ input:-webkit-autofill:active {
 }
 
 #trilogy-logo {
-  height: 50px;
-  margin-right: 15px;
   position: absolute;
+  margin-right: 15px;
   right: 0;
+  height: 50px;
 }
 
 #moviedb-logo {
   position: absolute;
-  right: 100px;
+  left: 83px;
   height: 45px;
+}
+
+#zomato-logo {
+  position: absolute;
+  margin-left: 15px;
+  left: 0;
+  height: 50px;
 }
 
 footer {
@@ -500,7 +625,7 @@ footer {
   grid-auto-flow: column;
   position: relative;
   grid-gap: 30px;
-  column-count: ;
+  /* column-count: ; */
   justify-content: flex-start;
   background-color: rgba(0, 0, 0, 0.438);
   padding: 15px;
