@@ -238,7 +238,7 @@ input:-webkit-autofill:active {
   text-decoration: none;
 }
 
-.addToFav {
+.addToFavMovie {
   position: absolute;
   bottom: 167px;
   left: 12px;
@@ -246,7 +246,7 @@ input:-webkit-autofill:active {
   cursor: pointer;
 }
 
-.addToFav:hover {
+.addToFavMovie:hover {
   transform: scale(1.1);
   transition: 1s;
 }
@@ -452,18 +452,25 @@ footer {
 
 #favCard {
   display: grid;
-  grid-row: 1;
-  grid-column: 1;
   grid-auto-flow: column;
   position: relative;
   grid-gap: 30px;
-  justify-content: flex-start;
-  background-color: rgba(255, 255, 255, 0.438);
+  justify-content: left;
+  background-color: rgba(0, 0, 0, 0.438);
+  padding: 15px;
+  margin-bottom: 20px;
+  min-height: 300px;
+}
+.movie-divs-template {
+  position: relative;
+  height: 410px;
+  grid-row: 2;
+  grid-column: 1;
 }
 
 .cardText {
   color: white;
-  font-size: 16px;
+  font-size: 22px;
   padding: 10px;
   font-family: "Quicksand", sans-serif;
   font-weight: bold;
@@ -478,7 +485,30 @@ footer {
   text-align: center;
   justify-items: center;
 }
-
+.invitationForm {
+  color: white;
+  font-size: 14px;
+  padding: 10px;
+  font-family: "Quicksand", sans-serif;
+}
+#invitation {
+  color: white;
+  font-size: 18px;
+  padding: 10px;
+  font-family: "Quicksand", sans-serif;
+  display: grid;
+  grid-auto-flow: column;
+  position: relative;
+  grid-gap: 30px;
+  column-count: ;
+  justify-content: flex-start;
+  background-color: rgba(0, 0, 0, 0.438);
+  padding: 15px;
+  min-height: 300px;
+}
+#invitation > p {
+  grid-column: 3/3;
+}
 /* Animate.js Styling */
 .ml9 {
   position: relative;
