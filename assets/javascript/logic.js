@@ -2,6 +2,10 @@
 var zipcode;
 var movieArr;
 var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+
+var zomatoArr;
+
+
 // DOM Reference Variables
 var submitButton = $("#submit-button");
 var userInput = $("#user-input");
@@ -28,6 +32,48 @@ function preloader() {
 // Submit Button with Zip Code Validation
 submitButton.on("click", function(e) {
   e.preventDefault();
+
+  if (!isValidZip.test(userInput.val().trim())) {
+    searchDiv.append(errorMessage.slideDown());
+  } else {
+    errorMessage.slideUp();
+    zipcode = userInput.val().trim();
+    $("#zipcode").text(zipcode);
+    userInput.val("");
+    console.log("var zipcode = " + zipcode);
+
+    formatWebpage();
+
+    $("#zipcode-alert").css("display", "block");
+    $("#main-grid").css("min-height", "calc(100vh - 80px)");
+    movieDiv.css("display", "grid");
+    zomatoDiv.css("display", "grid");
+    $("#search-div").css("grid-row", "2 / span 1");
+    $("footer").css("display", "flex");
+
+    // ajax call for movies
+
+    $.ajax({
+      url: "https://api.themoviedb.org/3/movie/now_playing",
+      data: {
+        api_key: "b9a61052b8eb1f78c85667deffc9b7aa",
+        language: "en-US",
+        region: "us",
+        page: "1"
+      },
+      method: "GET"
+    }).then(function(response) {
+      movieArr = response.results;
+      showMovies(movieArr);
+    });
+    // ajax call for food
+    $.ajax({
+      url:
+        "https://developers.zomato.com/api/v2.1/search?q=27615&apikey=b33efca80e6e3f8b5a3cfaf40c6ad1f4",
+      method: "GET"
+    });
+  }
+
 
   preloader();
   setTimeout(function() {
@@ -62,6 +108,7 @@ submitButton.on("click", function(e) {
       });
     }
   }, 1000);
+
 });
 
 // This function reformats landing page
@@ -347,6 +394,96 @@ $(document).on("click", "#signIn", function(e) {
       }
     });
 });
+
+
+// Function for getting Zomato API data
+function showFood(array) {
+  zomatoDiv.empty();
+
+  for (let i in array) {
+    var zomatoInnerDiv = $("<div>").addClass("restaurant-divs");
+
+    var foodPlace = $("<p>")
+      .addClass("restaurant-names")
+      .text(array[i].name);
+
+    var foodInfo = $("<a>").attr({
+      href: array[i].url,
+      target: "_blank"
+      class: "more-info"
+    });
+
+    var foodRatingDiv = $("<div>").addClass("restaurant-ratings");
+    var foodRating = Math.round(array[i].vote_average);
+
+    switch (foodRating) {
+      // case 0 = No Reviews
+      case 0:
+        foodRatingDiv.append(
+          $("<p>")
+            .text("No Reviews")
+            .addClass("no-user-ratings")
+        );
+        break;
+      // case 1 = 1 star
+      case 1:
+        foodRatingDiv.append(
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("fas fa-star-half-alt"),
+          $("<i>").addClass("far fa star")
+        );
+        break;
+      // case 2 = 2 stars
+      case 2:
+        foodRatingDiv.append(
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("fas fa-star-half-alt"),
+          $("<i>").addClass("far fa star")
+        );
+        break;
+      // case 3 = 3 stars
+      case 3:
+        foodRatingDiv.append(
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("fas fa-star-half-alt"),
+          $("<i>").addClass("far fa star")
+        );
+        break;
+      // case 4 = 4 stars
+      case 4:
+        foodRatingDiv.append(
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("fas fa-star-half-alt"),
+          $("<i>").addClass("far fa star")
+        );
+        break;
+      // case 5 = 5 stars
+      case 5:
+        foodRatingDiv.append(
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("far fa star"),
+          $("<i>").addClass("fas fa-star-half-alt"),
+          $("<i>").addClass("far fa star")
+        );
+    }
+        zomatoInnerDiv.append(
+          foodPlace,
+          foodRating,
+          foodInfo, 
+
+        )
+   
+  }
+}
 
 // ANIMEjs - Wraps every letter in a span to animate each one individually
 $("#cinegrub-intro").css("visibility", "visible");
