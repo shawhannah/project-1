@@ -702,6 +702,10 @@ footer {
   left: 15px;
 }
 
+#removeInvitation {
+  visibility: hidden;
+}
+
 #sendInvitation:hover {
   color: mediumseagreen;
 }
