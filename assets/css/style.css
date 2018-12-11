@@ -209,7 +209,7 @@ input:-webkit-autofill:active {
 }
 
 .movie-posters:hover {
-  border: dashed rgb(213, 53, 62) 5px;
+  border: dashed yellow 5px;
 }
 
 .movie-ratings {
@@ -448,7 +448,11 @@ input:-webkit-autofill:active {
 }
 
 .more-info:hover {
-  background: black;
+  background: slategray;
+}
+
+.more-info-alt:hover {
+  background: indianred;
 }
 
 .restaurant-divs a:hover {
