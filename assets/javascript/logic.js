@@ -1,10 +1,8 @@
 // Global Variables
 var zipcode;
 var movieArr;
-var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-
 var zomatoArr;
-
+var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
 
 // DOM Reference Variables
 var submitButton = $("#submit-button");
@@ -33,48 +31,6 @@ function preloader() {
 submitButton.on("click", function(e) {
   e.preventDefault();
 
-  if (!isValidZip.test(userInput.val().trim())) {
-    searchDiv.append(errorMessage.slideDown());
-  } else {
-    errorMessage.slideUp();
-    zipcode = userInput.val().trim();
-    $("#zipcode").text(zipcode);
-    userInput.val("");
-    console.log("var zipcode = " + zipcode);
-
-    formatWebpage();
-
-    $("#zipcode-alert").css("display", "block");
-    $("#main-grid").css("min-height", "calc(100vh - 80px)");
-    movieDiv.css("display", "grid");
-    zomatoDiv.css("display", "grid");
-    $("#search-div").css("grid-row", "2 / span 1");
-    $("footer").css("display", "flex");
-
-    // ajax call for movies
-
-    $.ajax({
-      url: "https://api.themoviedb.org/3/movie/now_playing",
-      data: {
-        api_key: "b9a61052b8eb1f78c85667deffc9b7aa",
-        language: "en-US",
-        region: "us",
-        page: "1"
-      },
-      method: "GET"
-    }).then(function(response) {
-      movieArr = response.results;
-      showMovies(movieArr);
-    });
-    // ajax call for food
-    $.ajax({
-      url:
-        "https://developers.zomato.com/api/v2.1/search?q=27615&apikey=b33efca80e6e3f8b5a3cfaf40c6ad1f4",
-      method: "GET"
-    });
-  }
-
-
   preloader();
   setTimeout(function() {
     if (!isValidZip.test(userInput.val().trim())) {
@@ -93,6 +49,7 @@ submitButton.on("click", function(e) {
       $("#search-div").css("grid-row", "2 / span 1");
       $("footer").css("display", "flex");
 
+      // AJAX Call for MovieDB API
       $.ajax({
         url: "https://api.themoviedb.org/3/movie/now_playing",
         data: {
@@ -106,9 +63,22 @@ submitButton.on("click", function(e) {
         movieArr = response.results;
         showMovies(movieArr);
       });
+
+      // AJAX Call for Zomato API
+      var queryURL =
+        "https://developers.zomato.com/api/v2.1/search?q=" +
+        zipcode +
+        "&apikey=b33efca80e6e3f8b5a3cfaf40c6ad1f4";
+
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).then(function(response) {
+        foodArr = response.restaurants;
+        showFood(foodArr);
+      });
     }
   }, 1000);
-
 });
 
 // This function reformats landing page
@@ -121,7 +91,7 @@ function formatWebpage() {
   $("#cinegrub-intro-logo").css("display", "none");
 }
 
-// Function for getting MovieDb API data
+// Function for getting MovieDb API Data
 function showMovies(array) {
   movieDiv.empty();
 
@@ -256,14 +226,10 @@ function showMovies(array) {
     });
     var movieAvailability = $("<p>")
       .addClass("check-availability")
-      .text("Check Availability");
+      .text("Availability");
     movieAvailabilityLink.append(movieAvailability);
 
-    var addFavButton = $("<img>").attr({
-      class: "addToFavMovie",
-      src: "assets/images/plussign.jpg",
-      alt: "Add To Favorites Button"
-    });
+    var addFavButton = $("<i>").addClass("addToFavMovie far fa-plus-square");
 
     movieInnerDiv.append(
       moviePosterLink,
@@ -274,6 +240,136 @@ function showMovies(array) {
       addFavButton
     );
     movieDiv.append(movieInnerDiv);
+  }
+}
+
+// Function for getting Zomato API Data
+function showFood(array) {
+  zomatoDiv.empty();
+
+  for (let i in array) {
+    var zomatoInnerDiv = $("<div>").addClass("restaurant-divs");
+    var flipCard = $("<div>").addClass("flip-card");
+    var frontCard = $("<div>").addClass("front-card");
+    var backCard = $("<div>").addClass("back-card");
+
+    // Front Card - Zomato API Info
+    var foodPic = $("<i>").addClass("fas fa-utensils");
+
+    var foodRatingDiv = $("<div>").addClass("restaurant-ratings");
+    var foodRating = Math.round(
+      parseInt(array[i].restaurant.user_rating.aggregate_rating)
+    );
+
+    switch (foodRating) {
+      case 0:
+        foodRatingDiv.append(
+          $("<p>")
+            .addClass("no-food-ratings")
+            .text("No Reviews")
+        );
+        break;
+      case 1:
+        foodRatingDiv.append(
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star")
+        );
+        break;
+      case 2:
+        foodRatingDiv.append(
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star")
+        );
+        break;
+      case 3:
+        foodRatingDiv.append(
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("far fa-star"),
+          $("<i>").addClass("far fa-star")
+        );
+        break;
+      case 4:
+        foodRatingDiv.append(
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("far fa-star")
+        );
+        break;
+      case 5:
+        foodRatingDiv.append(
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star"),
+          $("<i>").addClass("fas fa-star")
+        );
+    }
+
+    var foodPlace = $("<p>")
+      .addClass("restaurant-names")
+      .text(array[i].restaurant.name);
+
+    var foodLink = $("<a>").attr({
+      href: array[i].restaurant.url,
+      target: "_blank"
+    });
+    var foodInfo = $("<p>")
+      .addClass("more-info")
+      .text("More Info");
+    foodLink.append(foodInfo);
+
+    var addFavButton = $("<i>").addClass(
+      "addToFavRestaurant far fa-plus-square"
+    );
+
+    // Back Card - Google Maps API Info
+    var latitude = array[i].restaurant.location.latitude;
+    var longitude = array[i].restaurant.location.longitude;
+    var mapURL =
+      "https://maps.googleapis.com/maps/api/staticmap?center=" +
+      latitude +
+      "," +
+      longitude +
+      "&zoom=16&scale=1&size=250x365&key=AIzaSyBxRCuURpipFqMG-FIb6tBy-UOa6Uvb2kw";
+
+    var mapImage = $("<img>").attr({
+      src: mapURL,
+      alt: "Google Map Display of " + array[i].restaurant.name,
+      class: "map-formatting"
+    });
+    var mapLink = $("<a>").attr({
+      href:
+        "https://www.google.com/maps/search/?api=1&query=" +
+        array[i].restaurant.location.address,
+      target: "_blank"
+    });
+    var mapsMarker = $("<img>").attr({
+      src: "assets/images/restaurantmarker.png",
+      alt: "Restaurant Finder Icon",
+      class: "maps-marker"
+    });
+    mapLink.append(mapsMarker);
+
+    var mapsAddress = $("<p>")
+      .addClass("maps-address")
+      .text(array[i].restaurant.location.address);
+
+    // Card Appends
+    frontCard.append(foodPic, foodRatingDiv, foodPlace);
+    backCard.append(mapImage, mapLink, mapsAddress);
+    flipCard.append(frontCard, backCard);
+    zomatoInnerDiv.append(flipCard, foodLink, addFavButton);
+    zomatoDiv.append(zomatoInnerDiv);
   }
 }
 
@@ -335,7 +431,9 @@ $("#register").on("click", function(e) {
         });
 
         if (key) {
-          swal("Sorry, this username has already been taken.");
+          Swal({
+            text: "Sorry, this username has already been taken."
+          });
         } else {
           preloader();
           setTimeout(function() {
@@ -353,7 +451,11 @@ $("#register").on("click", function(e) {
         }
       });
   } else {
-    swal("A username and password is required for registration.");
+    Swal({
+      type: "error",
+      title: "Oops...",
+      text: "A username and password is required for registration."
+    });
   }
 });
 
@@ -375,9 +477,13 @@ $(document).on("click", "#signIn", function(e) {
     .equalTo(login)
     .on("value", function(snapshot) {
       if (snapshot.val() === null || login === "") {
-        swal(
-          "An error has occured while attempting to log in. Please try again."
-        );
+        Swal({
+          type: "error",
+          title: "Oops...",
+          text:
+            "An error has occured while attempting to log in. Please try again.",
+          footer: "<a href='assets/html/faq.html'>Why do I have this issue?</a>"
+        });
       } else {
         var key = Object.keys(snapshot.val());
         var db_login = snapshot.val()[key].login;
@@ -389,101 +495,13 @@ $(document).on("click", "#signIn", function(e) {
             formatWebpage();
           }, 1000);
         } else {
-          swal("Password is incorrect.");
+          Swal({
+            text: "Password is incorrect."
+          });
         }
       }
     });
 });
-
-
-// Function for getting Zomato API data
-function showFood(array) {
-  zomatoDiv.empty();
-
-  for (let i in array) {
-    var zomatoInnerDiv = $("<div>").addClass("restaurant-divs");
-
-    var foodPlace = $("<p>")
-      .addClass("restaurant-names")
-      .text(array[i].name);
-
-    var foodInfo = $("<a>").attr({
-      href: array[i].url,
-      target: "_blank"
-      class: "more-info"
-    });
-
-    var foodRatingDiv = $("<div>").addClass("restaurant-ratings");
-    var foodRating = Math.round(array[i].vote_average);
-
-    switch (foodRating) {
-      // case 0 = No Reviews
-      case 0:
-        foodRatingDiv.append(
-          $("<p>")
-            .text("No Reviews")
-            .addClass("no-user-ratings")
-        );
-        break;
-      // case 1 = 1 star
-      case 1:
-        foodRatingDiv.append(
-          $("<i>").addClass("far fa-star"),
-          $("<i>").addClass("far fa star"),
-          $("<i>").addClass("far fa star"),
-          $("<i>").addClass("fas fa-star-half-alt"),
-          $("<i>").addClass("far fa star")
-        );
-        break;
-      // case 2 = 2 stars
-      case 2:
-        foodRatingDiv.append(
-          $("<i>").addClass("far fa-star"),
-          $("<i>").addClass("far fa star"),
-          $("<i>").addClass("far fa star"),
-          $("<i>").addClass("fas fa-star-half-alt"),
-          $("<i>").addClass("far fa star")
-        );
-        break;
-      // case 3 = 3 stars
-      case 3:
-        foodRatingDiv.append(
-          $("<i>").addClass("far fa-star"),
-          $("<i>").addClass("far fa star"),
-          $("<i>").addClass("far fa star"),
-          $("<i>").addClass("fas fa-star-half-alt"),
-          $("<i>").addClass("far fa star")
-        );
-        break;
-      // case 4 = 4 stars
-      case 4:
-        foodRatingDiv.append(
-          $("<i>").addClass("far fa-star"),
-          $("<i>").addClass("far fa star"),
-          $("<i>").addClass("far fa star"),
-          $("<i>").addClass("fas fa-star-half-alt"),
-          $("<i>").addClass("far fa star")
-        );
-        break;
-      // case 5 = 5 stars
-      case 5:
-        foodRatingDiv.append(
-          $("<i>").addClass("far fa-star"),
-          $("<i>").addClass("far fa star"),
-          $("<i>").addClass("far fa star"),
-          $("<i>").addClass("fas fa-star-half-alt"),
-          $("<i>").addClass("far fa star")
-        );
-    }
-        zomatoInnerDiv.append(
-          foodPlace,
-          foodRating,
-          foodInfo, 
-
-        )
-   
-  }
-}
 
 // ANIMEjs - Wraps every letter in a span to animate each one individually
 $("#cinegrub-intro").css("visibility", "visible");
@@ -506,11 +524,18 @@ anime.timeline({ loop: false }).add({
   }
 });
 
-// add movie card to your account
-
+// Adding Movie Card To User's Account
 var addedMovieCard;
 
 $(document).on("click", ".addToFavMovie", function() {
+  Swal({
+    position: "top-end",
+    type: "success",
+    title: "Your movie has been saved.",
+    showConfirmButton: false,
+    timer: 1500
+  });
+
   var movieCard = {
     link: $(this)
       .parent(".movie-divs")
@@ -558,10 +583,13 @@ function renderMovieCard(template) {
 }
 $("#clearFavCard").on("click", function() {
   $("#favCard").empty();
+  Swal({
+    text: "Your plans have been cancelled."
+  });
   localStorage.removeItem("movieCard");
 });
 
-// send card to a friend
+// Sending Movie Plans To Another User
 database
   .ref("users")
   .orderByChild("login")
@@ -578,10 +606,16 @@ database
 $("#sendInvitation").on("click", function() {
   if (
     $("option").text() === "Choose a friend" ||
-    $("#time").val() === "" ||
-    $("#address").val() === ""
+    $("#time")
+      .val()
+      .trim() === "" ||
+    $("#address")
+      .val()
+      .trim() === ""
   ) {
-    swal("Please, fill in time, address and choose a friend from the list");
+    Swal({
+      text: "Please fill in all of the required fields."
+    });
   } else {
     database.ref("invitations").push({
       from: localStorage.getItem("login"),
@@ -592,7 +626,10 @@ $("#sendInvitation").on("click", function() {
       address: $("#address").val(),
       movie: localStorage.getItem("movieCard")
     });
-    swal("An invitation has been sent to your friend");
+    Swal({
+      type: "success",
+      text: "An invitation has been sent to your friend"
+    });
     $("#time").val("");
     $("#address").val("");
     $(".friendList").prop("selectedIndex", 0);
@@ -627,6 +664,9 @@ database
   });
 $("#removeInvitation").on("click", function() {
   $("#invitation").empty();
+  Swal({
+    text: "Your invitation has been deleted."
+  });
   var id = $(this).data("id");
   database.ref("invitations/" + id).remove();
 });
