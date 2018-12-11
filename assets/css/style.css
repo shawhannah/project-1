@@ -647,6 +647,10 @@ footer {
 #invitation > p {
   grid-column: 3/3;
 }
+#removeInvitation,
+#sendInvitation {
+  visibility: hidden;
+}
 
 /* Animate.js Styling */
 .ml9 {
