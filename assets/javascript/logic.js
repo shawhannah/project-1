@@ -741,14 +741,15 @@ database
   .on("value", function(snapshot) {
     var key = Object.keys(snapshot.val());
     $("#removeInvitation").css("visibility", "visible");
+    $("#userInviteText").css("visibility", "visible");
     $("#removeInvitation").data("id", key);
     console.log(snapshot.val()[key].movie);
-    var invText = $("<p>").text(
-      "Hi! It is " +
+    $("#userInviteText").text(
+      "Hey! It's " +
         snapshot.val()[key].from +
-        ". Let's meet at " +
+        ". Let's plan to meet at " +
         snapshot.val()[key].address +
-        " at " +
+        " around " +
         snapshot.val()[key].time +
         ". See you there!"
     );
@@ -759,8 +760,9 @@ database
     movieCardInv.find(".movie-ratings").html(parsedObj.rate);
     movieCardInv.find(".movie-titles").text(parsedObj.title);
     movieCardInv.find(".release-dates").text(parsedObj.release);
-    $("#invitation").append(invText, movieCardInv.html());
+    $("#invitation").append(movieCardInv.html());
   });
+
 $("#removeInvitation").on("click", function() {
   $("#invitation").empty();
   Swal({
@@ -769,4 +771,5 @@ $("#removeInvitation").on("click", function() {
   var id = $(this).data("id");
   database.ref("invitations/" + id).remove();
   $("#removeInvitation").css("visibility", "hidden");
+  $("#userInviteText").css("visibility", "hidden");
 });
