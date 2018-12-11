@@ -80,21 +80,35 @@
       </header>
 
       <main>
-        <p class="cardText">My favourite movie and restaurant:</p>
+        <p class="cardText" id="cinegrub-selections">
+          <span class="mini-cinegrub-logo">CineGrub </span>Selections
+        </p>
+
+        <div id="favCard">
+          <i id="clearFavCard" class="fas fa-trash-alt"></i>
+          <i id="sendInvitation" class="fas fa-share-square"></i>
+        </div>
+
         <div class="invitationForm">
           <select class="friendList">
-            <option>Choose a friend</option>
+            <option>Invite A Friend</option>
           </select>
-          <label for="time">When do you meet: </label>
+          <label for="time" id="timeText">time...</label>
           <input id="time" type="time" />
-          <label for="time">Where do you meet: </label>
+          <label for="time" id="placeText">and place...</label>
           <input id="address" type="text" placeholder="address" />
         </div>
-        <div id="favCard"><button id="clearFavCard">X</button></div>
-        <button id="sendInvitation">Send to Friend</button>
-        <button id="removeInvitation">Remove invitation</button>
-        <p class="cardText">See your invitations here:</p>
-        <div id="invitation"></div>
+
+        <p class="cardText">
+          <span class="mini-cinegrub-logo">CineGrub </span>Invitations
+        </p>
+
+        <div id="invitation">
+          <i id="removeInvitation" class="fas fa-trash-alt"></i>
+        </div>
+
+        <p id="userInviteText"></p>
+
         <div id="templateMovie">
           <div class="movie-divs-template">
             <a

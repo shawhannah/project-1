@@ -2,6 +2,10 @@ body {
   background: url(../images/moviehistorycopy.jpg) repeat;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 /* Main Grid Styling Below */
 #main-grid {
   display: grid;
@@ -205,7 +209,7 @@ input:-webkit-autofill:active {
 }
 
 .movie-posters:hover {
-  filter: brightness(0.8);
+  border: dashed rgb(213, 53, 62) 5px;
 }
 
 .movie-ratings {
@@ -571,7 +575,7 @@ footer {
   border-top: solid rgb(213, 53, 62, 0.8) 5px;
 }
 
-/* cards.html*/
+/* Styling for currentplans.html */
 #templateMovie,
 #templateRest {
   display: none;
@@ -582,73 +586,149 @@ footer {
   grid-auto-flow: column;
   position: relative;
   grid-gap: 30px;
-  justify-content: left;
-  background-color: rgba(0, 0, 0, 0.438);
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
   padding: 25px;
-  margin-bottom: 20px;
   min-height: 300px;
+  width: 70%;
+  margin: auto;
+  margin-bottom: 20px;
+  text-align: center;
 }
 .movie-divs-template {
   position: relative;
   height: 410px;
-  grid-row: 2;
+  grid-row: 1;
   grid-column: 1;
+  text-align: center;
 }
 .restaurant-divs-template {
   position: relative;
-
   width: 250px;
   height: 365px;
   border-radius: 5px;
   border: solid white 5px;
-  grid-row: 2;
+  grid-row: 1;
   grid-column: 2;
 }
 
+#cinegrub-selections {
+  margin-top: 30px;
+}
+
 .cardText {
+  width: 70%;
+  margin: auto;
+  padding-left: 0 !important;
   color: white;
-  font-size: 22px;
+  font-size: 23px;
   padding: 10px;
   font-family: "Quicksand", sans-serif;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+#timeText,
+#placeText {
+  margin: 0;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 22px;
+}
+
+#time,
+#address {
+  padding-left: 5px;
+}
+
+.mini-cinegrub-logo {
+  font-family: "Lobster Two", cursive;
+  color: rgb(255, 246, 142);
+  text-shadow: 5px -2px 10px black, 2px 2px 10px black;
+  font-size: 30px;
+  margin-right: 11px;
+}
+
+#clearFavCard,
+#removeInvitation {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 25px;
+  color: white;
 }
 
 #clearFavCard {
   visibility: hidden;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 30px;
-  height: 30px;
-  text-align: center;
-  justify-items: center;
 }
+
 .invitationForm {
   color: white;
-  font-size: 14px;
-  padding: 10px;
   font-family: "Quicksand", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  margin: -20px auto 5px auto;
+  background: rgb(0, 0, 0, 0.6);
+  width: 59%;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
 }
 #invitation {
   color: white;
   font-size: 18px;
-  padding: 10px;
   font-family: "Quicksand", sans-serif;
   display: grid;
   grid-auto-flow: column;
   position: relative;
   grid-gap: 30px;
-  /* column-count: ; */
-  justify-content: flex-start;
-  background-color: rgba(0, 0, 0, 0.438);
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
   padding: 15px;
   min-height: 300px;
+  width: 70%;
+  margin: auto;
+  margin-bottom: 30px;
 }
-#invitation > p {
-  grid-column: 3/3;
-}
-#removeInvitation,
+
 #sendInvitation {
+  visibility: hidden;
+  color: white;
+  font-size: 35px;
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+}
+
+#removeInvitation {
+  visibility: hidden;
+}
+
+#sendInvitation:hover {
+  color: mediumseagreen;
+}
+
+#removeInvitation:hover,
+#clearFavCard:hover {
+  color: indianred;
+}
+
+#userInviteText {
+  display: flex;
+  color: white;
+  font-family: "Quicksand", sans-serif;
+  justify-content: center;
+  align-items: center;
+  margin: -30px auto 30px auto;
+  background: rgb(0, 0, 0, 0.6);
+  width: 59%;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 22px;
   visibility: hidden;
 }
 
