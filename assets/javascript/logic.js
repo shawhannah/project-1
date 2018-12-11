@@ -3,6 +3,7 @@ var zipcode;
 var movieArr;
 var zomatoArr;
 var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+var ifCardIsIndianRed = 2; // Flag variable for designing every other Zomato card's color
 
 // DOM Reference Variables
 var submitButton = $("#submit-button");
@@ -249,9 +250,17 @@ function showFood(array) {
 
   for (let i in array) {
     var zomatoInnerDiv = $("<div>").addClass("restaurant-divs");
+    var parentCard = $("<div>").addClass("parent-card");
     var flipCard = $("<div>").addClass("flip-card");
     var frontCard = $("<div>").addClass("front-card");
     var backCard = $("<div>").addClass("back-card");
+
+    // Refer to Global Variables at the top
+    if (ifCardIsIndianRed % 2 === 0) {
+      frontCard.css("background", "indianred");
+    } else {
+      frontCard.css("background", "slategray");
+    }
 
     // Front Card - Zomato API Info
     var foodPic = $("<i>").addClass("fas fa-utensils");
@@ -368,8 +377,11 @@ function showFood(array) {
     frontCard.append(foodPic, foodRatingDiv, foodPlace);
     backCard.append(mapImage, mapLink, mapsAddress);
     flipCard.append(frontCard, backCard);
-    zomatoInnerDiv.append(flipCard, foodLink, addFavButton);
+    parentCard.append(flipCard);
+    zomatoInnerDiv.append(parentCard, foodLink, addFavButton);
     zomatoDiv.append(zomatoInnerDiv);
+
+    ifCardIsIndianRed++;
   }
 }
 
