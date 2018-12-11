@@ -472,7 +472,7 @@ $("#register").on("click", function(e) {
 });
 
 $(document).on("click", "#signOut", function() {
-  localStorage.clear();
+  localStorage.removeItem("login");
 });
 
 $(document).on("click", "#signIn", function(e) {
@@ -584,14 +584,13 @@ if (localStorage.getItem("movieCard") !== null) {
 }
 
 function renderMovieCard(template) {
-  var removeButton = $("<button>X</button>");
-  removeButton.attr("id", "clearFavCard");
+  $("#clearFavCard").css("visibility", "visible");
   template.find("a:first").attr("href", addedMovieCard.link);
   template.find("img:first").attr("src", addedMovieCard.poster);
   template.find(".movie-ratings").html(addedMovieCard.rate);
   template.find(".movie-titles").text(addedMovieCard.title);
   template.find(".release-dates").text(addedMovieCard.release);
-  $("#favCard").append(template.html(), removeButton);
+  $("#favCard").append(template.html());
 }
 $("#clearFavCard").on("click", function() {
   $("#favCard").empty();
@@ -599,7 +598,91 @@ $("#clearFavCard").on("click", function() {
     text: "Your plans have been cancelled."
   });
   localStorage.removeItem("movieCard");
+  localStorage.removeItem("restCard");
+  $("#clearFavCard").css("visibility", "hidden");
 });
+
+// Adding Restaurant Card To User's Account
+var addedRestCard;
+
+$(document).on("click", ".addToFavRestaurant", function() {
+  Swal({
+    position: "top-end",
+    type: "success",
+    title: "Your restaurant has been saved.",
+    showConfirmButton: false,
+    timer: 1500
+  });
+
+  var restaurantCard = {
+    map_link: $(this)
+      .parent(".restaurant-divs")
+      .find(".back-card")
+      .find("a")
+      .attr("href"),
+    map_img: $(this)
+      .closest(".restaurant-divs")
+      .find(".back-card")
+      .find("img")
+      .attr("src"),
+    rate: $(this)
+      .closest(".restaurant-divs")
+      .find(".restaurant-ratings")
+      .html(),
+    name: $(this)
+      .closest(".restaurant-divs")
+      .find(".restaurant-names")
+      .text(),
+    address: $(this)
+      .closest(".restaurant-divs")
+      .find(".maps-address")
+      .text(),
+    rest_link: $(this)
+      .closest(".restaurant-divs")
+      .find("a")
+      .last()
+      .attr("href"),
+    color: $(this)
+      .closest(".restaurant-divs")
+      .find(".front-card")
+      .css("background")
+  };
+
+  localStorage.setItem("restCard", JSON.stringify(restaurantCard));
+  $(".addToFavRestaurant").css("visibility", "hidden");
+});
+
+if (localStorage.getItem("restCard") !== null) {
+  addedRestCard = JSON.parse(localStorage.getItem("restCard"));
+
+  var templateCardRest = $("#templateRest");
+  renderRestCard(templateCardRest);
+}
+
+function renderRestCard(template) {
+  $("#clearFavCard").css("visibility", "visible");
+  template.find("a:last").attr("href", addedRestCard.rest_link);
+  template
+    .find(".back-card")
+    .find("img")
+    .attr("src", addedRestCard.map_img);
+  template
+    .find(".back-card")
+    .find("img")
+    .attr("alt", "Google Map Display of " + addedRestCard.name);
+  template.find(".restaurant-ratings").html(addedRestCard.rate);
+  template.find(".restaurant-names").text(addedRestCard.name);
+  template
+    .find(".back-card")
+    .find("a")
+    .attr("src", addedRestCard.map_link);
+  template
+    .find(".back-card")
+    .find("p")
+    .text(addedRestCard.address);
+  template.find(".front-card").css("background", addedRestCard.color);
+  $("#favCard").append(template.html());
+}
 
 // Sending Movie Plans To Another User
 database

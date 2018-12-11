@@ -572,7 +572,8 @@ footer {
 }
 
 /* cards.html*/
-#templateMovie {
+#templateMovie,
+#templateRest {
   display: none;
 }
 
@@ -583,7 +584,7 @@ footer {
   grid-gap: 30px;
   justify-content: left;
   background-color: rgba(0, 0, 0, 0.438);
-  padding: 15px;
+  padding: 25px;
   margin-bottom: 20px;
   min-height: 300px;
 }
@@ -592,6 +593,16 @@ footer {
   height: 410px;
   grid-row: 2;
   grid-column: 1;
+}
+.restaurant-divs-template {
+  position: relative;
+
+  width: 250px;
+  height: 365px;
+  border-radius: 5px;
+  border: solid white 5px;
+  grid-row: 2;
+  grid-column: 2;
 }
 
 .cardText {
@@ -603,6 +614,7 @@ footer {
 }
 
 #clearFavCard {
+  visibility: hidden;
   position: absolute;
   top: 0;
   right: 0;

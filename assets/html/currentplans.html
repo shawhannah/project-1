@@ -90,7 +90,7 @@
           <label for="time">Where do you meet: </label>
           <input id="address" type="text" placeholder="address" />
         </div>
-        <div id="favCard"></div>
+        <div id="favCard"><button id="clearFavCard">X</button></div>
         <button id="sendInvitation">Send to Friend</button>
         <button id="removeInvitation">Remove invitation</button>
         <p class="cardText">See your invitations here:</p>
@@ -115,7 +115,41 @@
             </p>
             <p class="release-dates">Released 2018-11-14</p>
             <a href="https://www.fandango.com/27540_movietimes" target="_blank"
-              ><p class="check-availability">Check Availability</p></a
+              ><p class="check-availability">Availability</p></a
+            >
+          </div>
+        </div>
+
+        <div id="templateRest">
+          <div class="restaurant-divs-template">
+            <div class="parent-card">
+              <div class="flip-card">
+                <div class="front-card">
+                  <i class="fas fa-utensils"></i>
+                  <div class="restaurant-ratings"></div>
+                  <p class="restaurant-names"></p>
+                </div>
+                <div class="back-card">
+                  <img
+                    src="https://maps.googleapis.com/maps/api/staticmap?center=35.6422700000,-78.8300800000&amp;zoom=16&amp;scale=1&amp;size=250x365&amp;key=AIzaSyBxRCuURpipFqMG-FIb6tBy-UOa6Uvb2kw"
+                    alt="Google Map Display of ACME Pizza"
+                    class="map-formatting"
+                  /><a
+                    href="https://www.google.com/maps/search/?api=1&amp;query=204 Village Walk Drive 27540"
+                    target="_blank"
+                    ><img
+                      src="assets/images/restaurantmarker.png"
+                      alt="Restaurant Finder Icon"
+                      class="maps-marker"
+                  /></a>
+                  <p class="maps-address">204 Village Walk Drive 27540</p>
+                </div>
+              </div>
+            </div>
+            <a
+              href="https://www.zomato.com/research-triangle/acme-pizza-holly-springs?utm_source=api_basic_user&amp;utm_medium=api&amp;utm_campaign=v2.1"
+              target="_blank"
+              ><p class="more-info">More Info</p></a
             >
           </div>
         </div>
