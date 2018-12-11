@@ -584,6 +584,7 @@ if (localStorage.getItem("movieCard") !== null) {
 }
 
 function renderMovieCard(template) {
+  $("#sendInvitation").css("visibility", "visible");
   $("#clearFavCard").css("visibility", "visible");
   template.find("a:first").attr("href", addedMovieCard.link);
   template.find("img:first").attr("src", addedMovieCard.poster);
@@ -600,6 +601,7 @@ $("#clearFavCard").on("click", function() {
   localStorage.removeItem("movieCard");
   localStorage.removeItem("restCard");
   $("#clearFavCard").css("visibility", "hidden");
+  $("#sendInvitation").css("visibility", "hidden");
 });
 
 // Adding Restaurant Card To User's Account
@@ -660,6 +662,7 @@ if (localStorage.getItem("restCard") !== null) {
 }
 
 function renderRestCard(template) {
+  $("#sendInvitation").css("visibility", "visible");
   $("#clearFavCard").css("visibility", "visible");
   template.find("a:last").attr("href", addedRestCard.rest_link);
   template
@@ -737,6 +740,7 @@ database
   .equalTo(localStorage.getItem("login"))
   .on("value", function(snapshot) {
     var key = Object.keys(snapshot.val());
+    $("#removeInvitation").css("visibility", "visible");
     $("#removeInvitation").data("id", key);
     console.log(snapshot.val()[key].movie);
     var invText = $("<p>").text(
@@ -749,13 +753,13 @@ database
         ". See you there!"
     );
     var parsedObj = JSON.parse(snapshot.val()[key].movie);
-    var movieCardInv = $(".movie-divs-template");
+    var movieCardInv = $("#templateMovie");
     movieCardInv.find("a:first").attr("href", parsedObj.link);
     movieCardInv.find("img:first").attr("src", parsedObj.poster);
     movieCardInv.find(".movie-ratings").html(parsedObj.rate);
     movieCardInv.find(".movie-titles").text(parsedObj.title);
     movieCardInv.find(".release-dates").text(parsedObj.release);
-    $("#invitation").append(invText, movieCardInv);
+    $("#invitation").append(invText, movieCardInv.html());
   });
 $("#removeInvitation").on("click", function() {
   $("#invitation").empty();
@@ -764,4 +768,5 @@ $("#removeInvitation").on("click", function() {
   });
   var id = $(this).data("id");
   database.ref("invitations/" + id).remove();
+  $("#removeInvitation").css("visibility", "hidden");
 });
