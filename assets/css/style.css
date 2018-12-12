@@ -772,7 +772,7 @@ footer {
 #faqDiv {
   margin: auto;
   width: 70%;
-  background: rgb(0, 0, 0, 0.5);
+  background: rgb(0, 0, 0, 0.6);
   padding: 30px;
   border-radius: 10px;
 }
@@ -830,7 +830,7 @@ footer {
 #formspree {
   margin: 30px auto;
   width: 70%;
-  background: rgb(0, 0, 0, 0.5);
+  background: rgb(0, 0, 0, 0.6);
   padding: 30px;
   border-radius: 10px;
   display: grid;
