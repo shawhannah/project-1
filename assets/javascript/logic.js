@@ -1,4 +1,16 @@
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyD3_PKioxYnnZv67H5XrE5iQxpSbVNOzPc",
+  authDomain: "cinegrub-c849c.firebaseapp.com",
+  databaseURL: "https://cinegrub-c849c.firebaseio.com",
+  projectId: "cinegrub-c849c",
+  storageBucket: "cinegrub-c849c.appspot.com",
+  messagingSenderId: "893203931783"
+};
+firebase.initializeApp(config);
+
 // Global Variables
+var database = firebase.database();
 var zipcode;
 var movieArr;
 var zomatoArr;
@@ -266,62 +278,85 @@ function showFood(array) {
     var foodPic = $("<i>").addClass("fas fa-utensils");
 
     var foodRatingDiv = $("<div>").addClass("restaurant-ratings");
-    var foodRating = Math.round(
-      parseInt(array[i].restaurant.user_rating.aggregate_rating)
-    );
-
-    switch (foodRating) {
-      case 0:
-        foodRatingDiv.append(
-          $("<p>")
-            .addClass("no-food-ratings")
-            .text("No Reviews")
-        );
-        break;
-      case 1:
-        foodRatingDiv.append(
-          $("<i>").addClass("fas fa-star"),
-          $("<i>").addClass("far fa-star"),
-          $("<i>").addClass("far fa-star"),
-          $("<i>").addClass("far fa-star"),
-          $("<i>").addClass("far fa-star")
-        );
-        break;
-      case 2:
-        foodRatingDiv.append(
-          $("<i>").addClass("fas fa-star"),
-          $("<i>").addClass("fas fa-star"),
-          $("<i>").addClass("far fa-star"),
-          $("<i>").addClass("far fa-star"),
-          $("<i>").addClass("far fa-star")
-        );
-        break;
-      case 3:
-        foodRatingDiv.append(
-          $("<i>").addClass("fas fa-star"),
-          $("<i>").addClass("fas fa-star"),
-          $("<i>").addClass("fas fa-star"),
-          $("<i>").addClass("far fa-star"),
-          $("<i>").addClass("far fa-star")
-        );
-        break;
-      case 4:
-        foodRatingDiv.append(
-          $("<i>").addClass("fas fa-star"),
-          $("<i>").addClass("fas fa-star"),
-          $("<i>").addClass("fas fa-star"),
-          $("<i>").addClass("fas fa-star"),
-          $("<i>").addClass("far fa-star")
-        );
-        break;
-      case 5:
-        foodRatingDiv.append(
-          $("<i>").addClass("fas fa-star"),
-          $("<i>").addClass("fas fa-star"),
-          $("<i>").addClass("fas fa-star"),
-          $("<i>").addClass("fas fa-star"),
-          $("<i>").addClass("fas fa-star")
-        );
+    var foodRating = parseInt(array[i].restaurant.user_rating.aggregate_rating);
+    if (foodRating >= 4.5) {
+      foodRatingDiv.append(
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star")
+      );
+    } else if (foodRating >= 4) {
+      foodRatingDiv.append(
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star-half-alt")
+      );
+    } else if (foodRating >= 3.5) {
+      foodRatingDiv.append(
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("far fa-star")
+      );
+    } else if (foodRating >= 3) {
+      foodRatingDiv.append(
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star-half-alt"),
+        $("<i>").addClass("far fa-star")
+      );
+    } else if (foodRating >= 2.5) {
+      foodRatingDiv.append(
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("far fa-star"),
+        $("<i>").addClass("far fa-star")
+      );
+    } else if (foodRating >= 2) {
+      foodRatingDiv.append(
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star-half-alt"),
+        $("<i>").addClass("far fa-star"),
+        $("<i>").addClass("far fa-star")
+      );
+    } else if (foodRating >= 1.5) {
+      foodRatingDiv.append(
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("far fa-star"),
+        $("<i>").addClass("far fa-star"),
+        $("<i>").addClass("far fa-star")
+      );
+    } else if (foodRating >= 1) {
+      foodRatingDiv.append(
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("fas fa-star-half-alt"),
+        $("<i>").addClass("far fa-star"),
+        $("<i>").addClass("far fa-star"),
+        $("<i>").addClass("far fa-star")
+      );
+    } else if (foodRating >= 0.5) {
+      foodRatingDiv.append(
+        $("<i>").addClass("fas fa-star"),
+        $("<i>").addClass("far fa-star"),
+        $("<i>").addClass("far fa-star"),
+        $("<i>").addClass("far fa-star"),
+        $("<i>").addClass("far fa-star")
+      );
+    } else {
+      foodRatingDiv.append(
+        $("<p>")
+          .addClass("no-food-ratings")
+          .text("No Reviews")
+      );
     }
 
     var foodPlace = $("<p>")
@@ -394,17 +429,6 @@ if (localStorage.getItem("login") !== null) {
   formatWebpage();
 }
 
-var config = {
-  apiKey: "AIzaSyD3_PKioxYnnZv67H5XrE5iQxpSbVNOzPc",
-  authDomain: "cinegrub-c849c.firebaseapp.com",
-  databaseURL: "https://cinegrub-c849c.firebaseio.com",
-  projectId: "cinegrub-c849c",
-  storageBucket: "cinegrub-c849c.appspot.com",
-  messagingSenderId: "893203931783"
-};
-firebase.initializeApp(config);
-var database = firebase.database();
-
 function showUserName() {
   $("#userLogin").css("display", "none");
   $(".dropdown").css("display", "block");
@@ -419,6 +443,7 @@ function setLocalStorage() {
     $("#login")
       .val()
       .trim()
+      .toLowerCase()
   );
   showUserName();
 }
@@ -428,7 +453,8 @@ $("#register").on("click", function(e) {
   if (
     $("#login")
       .val()
-      .trim() !== "" &&
+      .trim()
+      .toLowerCase() !== "" &&
     $("#password")
       .val()
       .trim() !== ""
@@ -436,7 +462,12 @@ $("#register").on("click", function(e) {
     database
       .ref("users")
       .orderByChild("login")
-      .equalTo($("#login").val())
+      .equalTo(
+        $("#login")
+          .val()
+          .trim()
+          .toLowerCase()
+      )
       .once("value", function(snapshot) {
         var key;
 
@@ -455,7 +486,8 @@ $("#register").on("click", function(e) {
             database.ref("users").push({
               login: $("#login")
                 .val()
-                .trim(),
+                .trim()
+                .toLowerCase(),
               password: $("#password")
                 .val()
                 .trim()
@@ -482,7 +514,8 @@ $(document).on("click", "#signIn", function(e) {
   e.preventDefault();
   var login = $("#login")
     .val()
-    .trim();
+    .trim()
+    .toLowerCase();
   var password = $("#password")
     .val()
     .trim();
