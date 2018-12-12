@@ -589,7 +589,6 @@ footer {
   display: grid;
   grid-auto-flow: column;
   position: relative;
-  grid-gap: 30px;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.6);
   padding: 25px;
@@ -605,6 +604,7 @@ footer {
   width: 190px;
   grid-row: 2;
   text-align: center;
+  margin-right: 40px;
 }
 .restaurant-divs-template {
   position: relative;
@@ -677,7 +677,7 @@ footer {
   font-size: 17px;
   margin: -20px auto 5px auto;
   background: rgb(0, 0, 0, 0.6);
-  width: 59%;
+  width: 51%;
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
 }
