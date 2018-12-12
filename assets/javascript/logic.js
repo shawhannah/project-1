@@ -14,6 +14,8 @@ var database = firebase.database();
 var zipcode;
 var movieArr;
 var zomatoArr;
+var extractLat;
+var extractLon;
 var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
 var everyOtherElement = 2; // Flag variable for designing every other Zomato card's color
 
@@ -77,19 +79,73 @@ submitButton.on("click", function(e) {
         showMovies(movieArr);
       });
 
-      // AJAX Call for Zomato API
-      var queryURL =
-        "https://developers.zomato.com/api/v2.1/search?q=" +
+      // AJAX CALL for Google Maps API
+      var googleMapsURL =
+        "https://maps.googleapis.com/maps/api/geocode/json?address=" +
         zipcode +
-        "&apikey=b33efca80e6e3f8b5a3cfaf40c6ad1f4";
+        "&key=AIzaSyBxRCuURpipFqMG-FIb6tBy-UOa6Uvb2kw";
 
       $.ajax({
-        url: queryURL,
+        url: googleMapsURL,
         method: "GET"
       }).then(function(response) {
-        foodArr = response.restaurants;
-        showFood(foodArr);
+        if (
+          response.status !== "ZERO_RESULTS" &&
+          response.results[0].formatted_address.includes(zipcode)
+        ) {
+          extractLat = response.results[0].geometry.location.lat;
+          extractLon = response.results[0].geometry.location.lng;
+          console.log(extractLat);
+          console.log(extractLon);
+        } else {
+          extractLat = "undefined";
+          extractLon = "undefined";
+        }
       });
+
+      // Because AJAX Calls are asynchronous, setTimeout() ensures this runs last
+      setTimeout(function() {
+        if (extractLat !== "undefined" || extractLon !== "undefined") {
+          preloader();
+          // AJAX Call for Zomato API
+          var queryURL =
+            "https://developers.zomato.com/api/v2.1/search?lat=" +
+            extractLat +
+            "&lon=" +
+            extractLon +
+            "&apikey=b33efca80e6e3f8b5a3cfaf40c6ad1f4";
+          console.log(queryURL);
+
+          $.ajax({
+            url: queryURL,
+            method: "GET"
+          }).then(function(response) {
+            foodArr = response.restaurants;
+            showFood(foodArr);
+          });
+        } else {
+          Swal({
+            type: "error",
+            title: "Error...",
+            text:
+              "The zipcode you entered is not a valid US zipcode. Please try again."
+          });
+
+          zomatoDiv.empty();
+          zomatoDiv.append(
+            $("<p>")
+              .text("No results were found.")
+              .addClass("noResultsFound")
+          );
+
+          movieDiv.empty();
+          movieDiv.append(
+            $("<p>")
+              .text("No results were found.")
+              .addClass("noResultsFound")
+          );
+        }
+      }, 1000);
     }
   }, 1000);
 });
@@ -572,6 +628,21 @@ anime.timeline({ loop: false }).add({
   }
 });
 
+// Collapsible Dropdown Functionality for CineGrub FAQs
+var acc = document.getElementsByClassName("accordion");
+
+for (var i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+
 // Adding Movie Card To User's Account
 var addedMovieCard;
 
@@ -731,7 +802,19 @@ function renderRestCard(template) {
   $("#favCard").append(template.html());
 }
 
-// Sending Movie and Reataurant Plans To Another User
+// Sending Movie and Restaurant Plans To Another User
+$("#removeInvitation")
+  .mouseenter(function() {
+    $("#removeInvitation")
+      .removeClass("fa-calendar")
+      .addClass("fa-calendar-times");
+  })
+  .mouseleave(function() {
+    $("#removeInvitation")
+      .removeClass("fa-calendar-times")
+      .addClass("fa-calendar");
+  });
+
 database
   .ref("users")
   .orderByChild("login")
@@ -798,8 +881,12 @@ database
     console.log(snapshot.key);
     console.log(localStorage.getItem("login"));
     if (localStorage.getItem("login") === snapshot.key) {
-      $("#removeInvitation").css("visibility", "visible");
-      $("#userInviteText").css("visibility", "visible");
+      // Workaround for making these DOM elements appear under specific conditions
+      if ($("#userInviteText").text() !== "") {
+        $("#removeInvitation").css("visibility", "visible");
+        $("#userInviteTextDiv").css("display", "block");
+        $("#userInviteText").css("visibility", "visible");
+      }
 
       $("#invitation")
         .find(".movie-divs-template")
@@ -820,12 +907,18 @@ database
           snapshot.val().time +
           ". See you there!"
       );
-      $("#removeInvitation").css("visibility", "visible");
 
+      // Workaround for making these DOM elements appear under specific conditions
+      if ($("#userInviteText").text() !== "") {
+        $("#removeInvitation").css("visibility", "visible");
+        $("#userInviteTextDiv").css("display", "block");
+        $("#userInviteText").css("visibility", "visible");
+      }
+
+      // Renders Movie Card
       if (snapshot.val().movie !== undefined) {
         var parsedObj = JSON.parse(snapshot.val().movie);
 
-        //movie card render
         movieCardInv.find("a:first").attr("href", parsedObj.link);
         movieCardInv.find("img:first").attr("src", parsedObj.poster);
         movieCardInv.find(".movie-ratings").html(parsedObj.rate);
@@ -833,7 +926,8 @@ database
         movieCardInv.find(".release-dates").text(parsedObj.release);
         $("#invitation").append(movieCardInv.html());
       }
-      // restaurant card render
+
+      // Renders Restaurant Card
       if (snapshot.val().restaurant !== undefined) {
         var rateparseObj2 = JSON.parse(snapshot.val().restaurant);
         restCardInv.find("a:last").attr("href", rateparseObj2.rest_link);
@@ -854,7 +948,8 @@ database
         restCardInv.find(".front-card").css("background", rateparseObj2.color);
         $("#invitation").append(restCardInv.html());
       }
-      //append everything
+
+      // Appends Everything
     }
   });
 
@@ -873,4 +968,5 @@ $("#removeInvitation").on("click", function() {
   database.ref("invitations/" + localStorage.getItem("login")).remove();
   $("#removeInvitation").css("visibility", "hidden");
   $("#userInviteText").css("visibility", "hidden");
+  $("#userInviteTextDiv").css("display", "none");
 });
