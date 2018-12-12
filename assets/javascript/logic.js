@@ -759,18 +759,27 @@ $("#sendInvitation").on("click", function() {
       text: "Please fill in all of the required fields."
     });
   } else {
-    database.ref("invitations").push({
-      from: localStorage.getItem("login"),
-      to: $(".friendList")
-        .find(":selected")
-        .text(),
-      time: $("#time").val(),
-      address: $("#address").val(),
-      movie: localStorage.getItem(localStorage.getItem("login") + "movieCard"),
-      restaurant: localStorage.getItem(
-        localStorage.getItem("login") + "restCard"
+    database
+      .ref(
+        "invitations/" +
+          $(".friendList")
+            .find(":selected")
+            .text()
       )
-    });
+      .set({
+        from: localStorage.getItem("login"),
+        to: $(".friendList")
+          .find(":selected")
+          .text(),
+        time: $("#time").val(),
+        address: $("#address").val(),
+        movie: localStorage.getItem(
+          localStorage.getItem("login") + "movieCard"
+        ),
+        restaurant: localStorage.getItem(
+          localStorage.getItem("login") + "restCard"
+        )
+      });
     Swal({
       type: "success",
       text: "An invitation has been sent to your friend"
@@ -782,67 +791,70 @@ $("#sendInvitation").on("click", function() {
 });
 
 database
-  .ref("invitations")
-  .orderByChild("to")
-  .equalTo(localStorage.getItem("login"))
+  .ref("invitations/" + localStorage.getItem("login"))
+
   .on("value", function(snapshot) {
     console.log(snapshot.val());
-    var key = Object.keys(snapshot.val());
-    $("#removeInvitation").css("visibility", "visible");
-    $("#userInviteText").css("visibility", "visible");
-    $("#removeInvitation").data("id", key);
-    console.log(key);
-    $("#invitation")
-      .find(".movie-divs-template")
-      .remove();
-    $("#invitation")
-      .find(".restaurant-divs-template")
-      .remove();
-    var movieCardInv = $("#templateMovie");
-    var restCardInv = $("#templateRest");
-    for (let i in key) {
-      console.log(snapshot.val()[key[i]].movie);
+    console.log(snapshot.key);
+    console.log(localStorage.getItem("login"));
+    if (localStorage.getItem("login") === snapshot.key) {
+      $("#removeInvitation").css("visibility", "visible");
+      $("#userInviteText").css("visibility", "visible");
+
+      $("#invitation")
+        .find(".movie-divs-template")
+        .remove();
+      $("#invitation")
+        .find(".restaurant-divs-template")
+        .remove();
+      var movieCardInv = $("#templateMovie");
+      var restCardInv = $("#templateRest");
+
+      console.log(snapshot.val().movie);
       $("#userInviteText").text(
         "Hey! It's " +
-          snapshot.val()[key[i]].from +
+          snapshot.val().from +
           ". Let's plan to meet at " +
-          snapshot.val()[key[i]].address +
+          snapshot.val().address +
           " around " +
-          snapshot.val()[key[i]].time +
+          snapshot.val().time +
           ". See you there!"
       );
       $("#removeInvitation").css("visibility", "visible");
-      var parsedObj = JSON.parse(snapshot.val()[key[i]].movie);
-      var rateparseObj2 = JSON.parse(snapshot.val()[key[i]].restaurant);
 
-      //movie card render
-      movieCardInv.find("a:first").attr("href", parsedObj.link);
-      movieCardInv.find("img:first").attr("src", parsedObj.poster);
-      movieCardInv.find(".movie-ratings").html(parsedObj.rate);
-      movieCardInv.find(".movie-titles").text(parsedObj.title);
-      movieCardInv.find(".release-dates").text(parsedObj.release);
+      if (snapshot.val().movie !== undefined) {
+        var parsedObj = JSON.parse(snapshot.val().movie);
 
+        //movie card render
+        movieCardInv.find("a:first").attr("href", parsedObj.link);
+        movieCardInv.find("img:first").attr("src", parsedObj.poster);
+        movieCardInv.find(".movie-ratings").html(parsedObj.rate);
+        movieCardInv.find(".movie-titles").text(parsedObj.title);
+        movieCardInv.find(".release-dates").text(parsedObj.release);
+        $("#invitation").append(movieCardInv.html());
+      }
       // restaurant card render
-
-      restCardInv.find("a:last").attr("href", rateparseObj2.rest_link);
-      restCardInv.find(".map-formatting").attr("src", rateparseObj2.map_img);
-      restCardInv
-        .find(".map-formatting")
-        .attr("alt", "Google Map Display of " + rateparseObj2.name);
-      restCardInv.find(".restaurant-ratings").html(rateparseObj2.rate);
-      restCardInv.find(".restaurant-names").text(rateparseObj2.name);
-      restCardInv
-        .find(".back-card")
-        .find("a")
-        .attr("src", rateparseObj2.map_link);
-      restCardInv
-        .find(".back-card")
-        .find("p")
-        .text(rateparseObj2.address);
-      restCardInv.find(".front-card").css("background", rateparseObj2.color);
-
+      if (snapshot.val().restaurant !== undefined) {
+        var rateparseObj2 = JSON.parse(snapshot.val().restaurant);
+        restCardInv.find("a:last").attr("href", rateparseObj2.rest_link);
+        restCardInv.find(".map-formatting").attr("src", rateparseObj2.map_img);
+        restCardInv
+          .find(".map-formatting")
+          .attr("alt", "Google Map Display of " + rateparseObj2.name);
+        restCardInv.find(".restaurant-ratings").html(rateparseObj2.rate);
+        restCardInv.find(".restaurant-names").text(rateparseObj2.name);
+        restCardInv
+          .find(".back-card")
+          .find("a")
+          .attr("src", rateparseObj2.map_link);
+        restCardInv
+          .find(".back-card")
+          .find("p")
+          .text(rateparseObj2.address);
+        restCardInv.find(".front-card").css("background", rateparseObj2.color);
+        $("#invitation").append(restCardInv.html());
+      }
       //append everything
-      $("#invitation").append(movieCardInv.html(), restCardInv.html());
     }
   });
 
@@ -857,8 +869,8 @@ $("#removeInvitation").on("click", function() {
   Swal({
     text: "Your invitation has been deleted."
   });
-  var id = $(this).data("id");
-  database.ref("invitations/" + id).remove();
+
+  database.ref("invitations/" + localStorage.getItem("login")).remove();
   $("#removeInvitation").css("visibility", "hidden");
   $("#userInviteText").css("visibility", "hidden");
 });
