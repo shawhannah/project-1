@@ -25,7 +25,7 @@
       href="https://fonts.googleapis.com/css?family=Lobster+Two|Medula+One|Grand+Hotel|Quicksand:400,700"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="form.css" >
+    <link rel="stylesheet" href="form.css" />
     <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
   </head>
 
@@ -81,212 +81,172 @@
       </header>
 
       <main>
-          <style>
-              .accordion {
-                background-color: #eee;
-                color: #444;
-                cursor: pointer;
-                padding: 18px;
-                width: 100%;
-                border: none;
-                text-align: left;
-                outline: none;
-                font-size: 15px;
-                transition: 0.4s;
-              }
-        
-              .active,
-              .accordion:hover {
-                background-color: #ccc;
-              }
-        
-              .panel {
-                padding: 0 18px;
-                display: none;
-                background-color: white;
-                overflow: hidden;
-              }
-              .accordion:after {
-                content: "\02795"; /* Unicode character for "plus" sign (+) */
-                font-size: 13px;
-                color: #777;
-                float: right;
-                margin-left: 5px;
-              }
-        
-              .active:after {
-                content: "\2796"; /* Unicode character for "minus" sign (-) */
-              }
-         #form_container
-{
-    background-image: url("images/paper-1914901_1280.jpg");
-    background-size:100% 100%;
-    padding:15px 15px;
-    margin-top:15px;
-}
-body
-{
-    background-color: #F4EAD5;
-}
-#form_container input[type='text'],
-#form_container input[type='email'],
-#form_container textarea
-{
-    background: rgba(255,255,255,0.2);  
-}
-h2 {
-  color: white;
-  
-}
-h3 {
-  color: white;
-  
-}
-#form_container{
-}
-p {
-  color: white;
-}
-label {
-  color: white;
-}
-.answers {
-  color: black;
-  
-}
-</style>
-          </head>
-          <body>
-            <h2>Frequently Asked Questions</h2>
-            <h3>(Please click on each question to see the answer)</h3>
-            <button class="accordion">
-                What is Cinegrub?
-              </button>
-              <div class="panel">
-                <p class= "answers"> Cinegrub is a website that connects you to local movie theatres and restaraunts. You can look through reviews and ratings for movies and check playing times. You can use our gps tool to see how close you are to each restaraunt. We even have a "current plan" feature where you can set up a movie and a date with a friend.
-                </p>
-              </div>
-            
-            <button class="accordion">
-              Can I use an address to search your website instead of entering a zipcode?
-            </button>
-            <div class="panel">
-              <p class= "answers">Not at the moment. All of our searches are done using zip codes, but once you
-                click on Fandango there is an an option to key in an exact address.
-              </p>
+        <h2 id="faqTitle">
+          <span id="faqLogo">CineGrub</span>Frequently Asked Questions
+        </h2>
+
+        <div id="faqDiv">
+          <button class="accordion">
+            <span class="questions">What is CineGrub?</span>
+          </button>
+
+          <div class="panel">
+            <p class="answers">
+              CineGrub connects a user to information on local restaurants and
+              movies playing nearby. Reviews are calculated and displayed within
+              a five star scale to inform the user of a restaurant or movie's
+              popularity. In addition, registered members may share their plans
+              through invitations to friends within the app.
+            </p>
+          </div>
+
+          <button class="accordion">
+            <span class="questions">
+              Can I use an physical address to search within CineGrub instead of
+              entering a zipcode?
+            </span>
+          </button>
+
+          <div class="panel">
+            <p class="answers">
+              Not at the moment. All searches are filtered through valid
+              zipcodes, however, our data comes equipped with Fandango-supported
+              links and Google Maps functionality to assist in finding a
+              location near you.
+            </p>
+          </div>
+
+          <button class="accordion">
+            <span class="questions">
+              If I want to invite someone to a movie and restaurant, do they
+              also have to be a member?
+            </span>
+          </button>
+
+          <div class="panel">
+            <p class="answers">
+              Yes. The person you choose to invite must also be a registered
+              member of CineGrub.
+            </p>
+          </div>
+
+          <button class="accordion">
+            <span class="questions">
+              I am having difficulty signing in with my username.
+            </span>
+          </button>
+
+          <div class="panel">
+            <p class="answers">
+              CineGrub stores every username, which cannot then be registered by
+              a new user. In addition, every password is case-sensitive. Please
+              make sure to double-check your credentials.
+            </p>
+          </div>
+
+          <button class="accordion">
+            <span class="questions">
+              Is there a dedicated service number or way to contact if I have
+              any further questions?
+            </span>
+          </button>
+
+          <div class="panel">
+            <p class="answers">
+              At this time, CineGrub does not have a dedicated service number.
+              You can however scroll to the form at the bottom of this page to
+              send any additional questions or issues you may be experiencing.
+            </p>
+          </div>
+
+          <button class="accordion">
+            <span class="questions">
+              How do I go about saving a movie and restaraunt?
+            </span>
+          </button>
+
+          <div class="panel">
+            <p class="answers">
+              Each restaurant and movie is individually equipped with a plus
+              button to make creating plans seamless. You may access your
+              CineGrub selections from the Current Plans page located within the
+              dropdown menu beside your username.
+            </p>
+          </div>
+
+          <button class="accordion">
+            <span class="questions">
+              Am I able to select more than one movie or restaurant?
+            </span>
+          </button>
+
+          <div class="panel">
+            <p class="answers">
+              You can only store one movie and restaurant at a time. You can
+              however delete your current choices and modify them as often as
+              you'd like.
+            </p>
+          </div>
+        </div>
+
+        <form
+          method="POST"
+          action="https://formspree.io/keiranhamilton@gmail.com"
+          id="formspree"
+        >
+          <div id="formOutline">
+            <div id="groupedInputs">
+              <input
+                type="text"
+                id="nameFormspree"
+                name="email"
+                placeholder="Name"
+                required
+              />
+              <input
+                type="email"
+                id="emailFormspree"
+                name="email"
+                placeholder="Email"
+                required
+              />
             </div>
-        
-            <button class="accordion">If I use the "current plans" feature on your website, and I want to invite
-                someone to a movie and dinner do they also have to be a member?</button>
-            <div class="panel"><p class= "answers">Yes. The person you choose to invite does have to be a member.</p></div>
-        
-            <button class="accordion">I use the same username on every site, but for some reason Im having trouble signing in with my username on your website.</button>
-            <div class="panel"><p class= "answers">Our usernames are case sensitive. The majority of the problems people have with logging in is due to that.</p></div>
-            <button class="accordion">Is there a customer service number or someone we can email when we have issues on the site?</button>
-            <div class="panel"><p class= "answers">Yes, please scroll to the bottom of this page to send any questions or issues that havent been resolved in this FAQ section.</p></div>
-            <button class="accordion">How do you go about saving your favorite movie/restaraunt?</button>
-            <div class="panel"><p class= "answers">First you key in your zipcode on the main screen. Once you find your favorite movie click the plus button on the movie icon. Then click on the drop down arrow and click on  "current plans" to view what you have just selected.</p></div>
-            <button class="accordion">Are we able to add more than one favorite movie and restaraunt?</button>
-            <div class="panel"><p class= "answers">No. You can only store one of each at a time, but you are able to delete it and change it as often as you want.</p></div><br><br>
-            
-            <form method="POST" action="https://formspree.io/keiranhamilton@gmail.com">
-              <input type="name" name="email" placeholder="Name">
-              <input type="email" name="email" placeholder="Your email">
-              <textarea name="message" placeholder="Your question"></textarea>
-              <button type="submit">Send</button>
-            </form>
-           
-            <script>
-              var acc = document.getElementsByClassName("accordion");
-              var i;
-        
-              for (i = 0; i < acc.length; i++) {
-                acc[i].addEventListener("click", function() {
-                  this.classList.toggle("active");
-                  var panel = this.nextElementSibling;
-                  if (panel.style.display === "block") {
-                    panel.style.display = "none";
-                  } else {
-                    panel.style.display = "block";
-                  }
-                });
-              }
-              $(function()
-{
-    function after_form_submitted(data) 
-    {
-        if(data.result == 'success')
-        {
-            $('form#reused_form').hide();
-            $('#success_message').show();
-            $('#error_message').hide();
-        }
-        else
-        {
-            $('#error_message').append('<ul></ul>');
-            jQuery.each(data.errors,function(key,val)
-            {
-                $('#error_message ul').append('<li>'+key+':'+val+'</li>');
-            });
-            $('#success_message').hide();
-            $('#error_message').show();
-            //reverse the response on the button
-            $('button[type="button"]', $form).each(function()
-            {
-                $btn = $(this);
-                label = $btn.prop('orig_label');
-                if(label)
-                {
-                    $btn.prop('type','submit' ); 
-                    $btn.text(label);
-                    $btn.prop('orig_label','');
-                }
-            });
-            
-        }//else
-    }
-    $('#reused_form').submit(function(e)
-      {
-        e.preventDefault();
-        $form = $(this);
-        //show some response on the button
-        $('button[type="submit"]', $form).each(function()
-        {
-            $btn = $(this);
-            $btn.prop('type','button' ); 
-            $btn.prop('orig_label',$btn.text());
-            $btn.text('Sending ...');
-        });
-        
-         $.ajax({
-            type: "POST",
-            url: 'handler.php',
-            data: $form.serialize(),
-            success: after_form_submitted,
-            dataType: 'json' 
-            });        
-        
-      });   
-});
-        </script>
-        
-  </main>
+            <input
+              type="text"
+              id="subjectFormspree"
+              name="_subject"
+              placeholder="Subject Line"
+              required
+            />
+            <textarea id="textFormspree" name="message" required></textarea>
+
+            <button id="submitFormspree" type="submit">Send</button>
+          </div>
+
+          <div id="contactUs">
+            <p>
+              If you have any further questions, don't hesitate to contact us by
+              filling out the form.
+            </p>
+          </div>
+        </form>
+      </main>
     </div>
 
-    <footer>
+    <footer style="display: flex">
       &copy Copyright 2018 - CineGrub, LLC.
       <img
-        src="assets/images/MovieDB_API.png"
+        src="../images/MovieDB_API.png"
         alt="Powered by MovieDB Logo"
         id="moviedb-logo"
       />
       <img
-        src="assets/images/ZomatoAPI.png"
+        src="../images/ZomatoAPI.png"
         alt="Powered by Zomato API Logo"
         id="zomato-logo"
       />
       <img
-        src="assets/images/trilogylogo.png"
+        src="../images/trilogylogo.png"
         alt="Trilogy Education Services Logo"
         id="trilogy-logo"
       />

@@ -508,6 +508,15 @@ input:-webkit-autofill:active {
   margin: 0;
 }
 
+.noResultsFound {
+  color: white;
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  align-self: center;
+  font-size: 35px;
+}
+
 /* Flip Animation Styling */
 .parent-card {
   width: 100%;
@@ -597,14 +606,13 @@ footer {
   margin: auto;
   margin-bottom: 20px;
   text-align: center;
+  grid-gap: 0 30px;
 }
 .movie-divs-template {
   position: relative;
   height: 420px;
   width: 190px;
-  grid-row: 2;
   text-align: center;
-  margin-right: 40px;
 }
 .restaurant-divs-template {
   position: relative;
@@ -612,8 +620,6 @@ footer {
   height: 365px;
   border-radius: 5px;
   border: solid white 5px;
-  grid-row: 2;
-  grid-column: 2;
   margin-bottom: 50px;
 }
 
@@ -655,17 +661,13 @@ footer {
   margin-right: 11px;
 }
 
-#clearFavCard,
-#removeInvitation {
+#clearFavCard {
+  visibility: hidden;
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 25px;
   color: white;
-}
-
-#clearFavCard {
-  visibility: hidden;
 }
 
 .invitationForm {
@@ -681,22 +683,19 @@ footer {
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
 }
+
 #invitation {
-  color: white;
-  font-size: 18px;
-  font-family: "Quicksand", sans-serif;
   display: grid;
   grid-auto-flow: column;
   position: relative;
-  grid-gap: 30px;
+  grid-gap: 0 30px;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.6);
-  padding: 15px;
+  padding: 25px;
   min-height: 300px;
   width: 70%;
   margin: auto;
   margin-bottom: 30px;
-  justify-items: center;
 }
 
 #sendInvitation {
@@ -710,6 +709,11 @@ footer {
 
 #removeInvitation {
   visibility: hidden;
+  color: white;
+  font-size: 35px;
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
 }
 
 #sendInvitation:hover {
@@ -721,20 +725,230 @@ footer {
   color: indianred;
 }
 
+#userInviteTextDiv {
+  padding: 20px 20px 0 20px;
+  background: rgb(0, 0, 0, 0.6);
+  width: 70%;
+  margin: auto;
+  display: none;
+}
+
 #userInviteText {
-  display: flex;
   color: white;
   font-family: "Quicksand", sans-serif;
+  padding: 5px 20px;
+  margin: 0;
+  font-weight: bold;
+  font-size: 16px;
+  visibility: hidden;
+  word-break: break-word;
+  background: rgb(220, 20, 60);
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* Styling for CineGrub FAQs Page */
+
+#faqLogo {
+  font-family: "Lobster Two", cursive;
+  color: rgb(255, 246, 142);
+  text-shadow: 5px -2px 10px black, 2px 2px 10px black;
+  font-size: 40px;
+  margin-right: 11px;
+}
+
+#faqTitle {
+  color: white;
+  font-size: 23px;
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+  width: 70%;
+  margin: 30px auto;
+  display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom-left-radius: 7px;
-  border-bottom-right-radius: 7px;
-  padding: 10px;
+}
+
+#faqDiv {
+  margin: auto;
+  width: 70%;
+  background: rgb(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.questions {
+  color: white;
+}
+
+.answers {
+  margin: 0;
+  padding: 15px;
+  font-weight: lighter;
+  color: black;
+  letter-spacing: 1px;
+}
+
+.accordion {
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none !important;
+  transition: 0.4s;
   font-weight: bold;
-  font-size: 22px;
-  visibility: hidden;
-  grid-row: 1;
-  grid-column: 1 / span 2;
+  background: rgb(255, 255, 255, 0.5);
+  padding: 10px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: baseline;
+  font-family: "Quicksand", sans-serif;
+}
+
+.active,
+.accordion:hover {
+  background: rgb(220, 20, 60);
+}
+
+.panel {
+  padding: 0 18px;
+  display: none;
+  background-color: white;
+  overflow: hidden;
+}
+.accordion:after {
+  content: "\02795"; /* Unicode character for "plus" sign (+) */
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.active:after {
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+#formspree {
+  margin: 30px auto;
+  width: 70%;
+  background: rgb(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#nameFormspree {
+  margin-bottom: 20px;
+  width: 180px;
+  height: 50px;
+  padding: 15px;
+  outline: none;
+  border: none;
+  margin-right: 20px;
+  background: rgb(70, 70, 70);
+  color: white;
+  font-weight: lighter;
+  font-family: "Quicksand", sans-serif;
+  border-bottom: solid indianred 2px;
+}
+
+#nameFormspree::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: lighter;
+  font-family: "Quicksand", sans-serif;
+}
+
+#emailFormspree {
+  margin-bottom: 20px;
+  width: 180px;
+  height: 50px;
+  padding: 15px;
+  outline: none;
+  border: none;
+  background: rgb(70, 70, 70);
+  color: white;
+  font-weight: lighter;
+  font-family: "Quicksand", sans-serif;
+  border-bottom: solid indianred 2px;
+}
+
+#emailFormspree::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: lighter;
+  font-family: "Quicksand", sans-serif;
+}
+
+#subjectFormspree {
+  margin-bottom: 20px;
+  width: 384px;
+  height: 50px;
+  padding: 15px;
+  outline-color: none;
+  border: none;
+  background: rgb(70, 70, 70);
+  color: white;
+  font-weight: lighter;
+  font-family: "Quicksand", sans-serif;
+  border-bottom: solid indianred 2px;
+}
+
+#subjectFormspree::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: lighter;
+  font-family: "Quicksand", sans-serif;
+}
+
+#textFormspree {
+  margin-bottom: 20px;
+  padding: 15px;
+  outline: none;
+  border: none;
+  max-height: 150px;
+  width: 384px;
+  min-height: 150px;
+  background: rgb(70, 70, 70);
+  color: white;
+  font-weight: lighter;
+  font-family: "Quicksand", sans-serif;
+  border-bottom: solid indianred 2px;
+}
+
+#textFormspree::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: lighter;
+  font-family: "Quicksand", sans-serif;
+}
+
+#submitFormspree {
+  background: transparent;
+  border: solid indianred 2px;
+  border-radius: 5px;
+  color: indianred;
+  width: 65px;
+  height: 40px;
+  margin-left: 319px;
+}
+
+#submitFormspree:focus,
+#subjectFormspree:focus {
+  outline: none;
+}
+
+#submitFormspree:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+#formOutline {
+  border: solid indianred 2px;
+  width: 422px;
+  padding: 16px;
+}
+
+#contactUs {
+  font-family: "Quicksand", sans-serif;
+  color: white;
+  padding: 20px;
+  font-size: 25px;
 }
 
 /* Animate.js Styling */
