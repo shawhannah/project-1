@@ -601,9 +601,9 @@ footer {
 }
 .movie-divs-template {
   position: relative;
-  height: 410px;
-  grid-row: 1;
-  grid-column: 1;
+  height: 420px;
+  width: 190px;
+  grid-row: 2;
   text-align: center;
 }
 .restaurant-divs-template {
@@ -612,8 +612,9 @@ footer {
   height: 365px;
   border-radius: 5px;
   border: solid white 5px;
-  grid-row: 1;
+  grid-row: 2;
   grid-column: 2;
+  margin-bottom: 50px;
 }
 
 #cinegrub-selections {
@@ -725,15 +726,13 @@ footer {
   font-family: "Quicksand", sans-serif;
   justify-content: center;
   align-items: center;
-  margin: -30px auto 30px auto;
-  background: rgb(0, 0, 0, 0.6);
-  width: 59%;
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
   padding: 10px;
   font-weight: bold;
   font-size: 22px;
   visibility: hidden;
+  grid-row: 1;
 }
 
 /* Animate.js Styling */

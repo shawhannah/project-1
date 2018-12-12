@@ -607,13 +607,20 @@ $(document).on("click", ".addToFavMovie", function() {
       .text()
   };
 
-  localStorage.setItem("movieCard", JSON.stringify(movieCard));
+  localStorage.setItem(
+    localStorage.getItem("login") + "movieCard",
+    JSON.stringify(movieCard)
+  );
   console.log(localStorage.getItem("movieCard"));
   $(".addToFavMovie").css("visibility", "hidden");
 });
 
-if (localStorage.getItem("movieCard") !== null) {
-  addedMovieCard = JSON.parse(localStorage.getItem("movieCard"));
+if (
+  localStorage.getItem(localStorage.getItem("login") + "movieCard") !== null
+) {
+  addedMovieCard = JSON.parse(
+    localStorage.getItem(localStorage.getItem("login") + "movieCard")
+  );
   console.log(addedMovieCard);
   var templateCardMovie = $("#templateMovie");
   renderMovieCard(templateCardMovie);
@@ -634,8 +641,8 @@ $("#clearFavCard").on("click", function() {
   Swal({
     text: "Your plans have been cancelled."
   });
-  localStorage.removeItem("movieCard");
-  localStorage.removeItem("restCard");
+  localStorage.removeItem(localStorage.getItem("login") + "movieCard");
+  localStorage.removeItem(localStorage.getItem("login") + "restCard");
   $("#clearFavCard").css("visibility", "hidden");
   $("#sendInvitation").css("visibility", "hidden");
 });
@@ -686,12 +693,17 @@ $(document).on("click", ".addToFavRestaurant", function() {
       .css("background")
   };
 
-  localStorage.setItem("restCard", JSON.stringify(restaurantCard));
+  localStorage.setItem(
+    localStorage.getItem("login") + "restCard",
+    JSON.stringify(restaurantCard)
+  );
   $(".addToFavRestaurant").css("visibility", "hidden");
 });
 
-if (localStorage.getItem("restCard") !== null) {
-  addedRestCard = JSON.parse(localStorage.getItem("restCard"));
+if (localStorage.getItem(localStorage.getItem("login") + "restCard") !== null) {
+  addedRestCard = JSON.parse(
+    localStorage.getItem(localStorage.getItem("login") + "restCard")
+  );
 
   var templateCardRest = $("#templateRest");
   renderRestCard(templateCardRest);
@@ -701,13 +713,9 @@ function renderRestCard(template) {
   $("#sendInvitation").css("visibility", "visible");
   $("#clearFavCard").css("visibility", "visible");
   template.find("a:last").attr("href", addedRestCard.rest_link);
+  template.find(".map-formatting").attr("src", addedRestCard.map_img);
   template
-    .find(".back-card")
-    .find("img")
-    .attr("src", addedRestCard.map_img);
-  template
-    .find(".back-card")
-    .find("img")
+    .find(".map-formatting")
     .attr("alt", "Google Map Display of " + addedRestCard.name);
   template.find(".restaurant-ratings").html(addedRestCard.rate);
   template.find(".restaurant-names").text(addedRestCard.name);
@@ -723,7 +731,7 @@ function renderRestCard(template) {
   $("#favCard").append(template.html());
 }
 
-// Sending Movie Plans To Another User
+// Sending Movie and Reataurant Plans To Another User
 database
   .ref("users")
   .orderByChild("login")
@@ -758,7 +766,10 @@ $("#sendInvitation").on("click", function() {
         .text(),
       time: $("#time").val(),
       address: $("#address").val(),
-      movie: localStorage.getItem("movieCard")
+      movie: localStorage.getItem(localStorage.getItem("login") + "movieCard"),
+      restaurant: localStorage.getItem(
+        localStorage.getItem("login") + "restCard"
+      )
     });
     Swal({
       type: "success",
@@ -775,32 +786,74 @@ database
   .orderByChild("to")
   .equalTo(localStorage.getItem("login"))
   .on("value", function(snapshot) {
+    console.log(snapshot.val());
     var key = Object.keys(snapshot.val());
     $("#removeInvitation").css("visibility", "visible");
     $("#userInviteText").css("visibility", "visible");
     $("#removeInvitation").data("id", key);
-    console.log(snapshot.val()[key].movie);
-    $("#userInviteText").text(
-      "Hey! It's " +
-        snapshot.val()[key].from +
-        ". Let's plan to meet at " +
-        snapshot.val()[key].address +
-        " around " +
-        snapshot.val()[key].time +
-        ". See you there!"
-    );
-    var parsedObj = JSON.parse(snapshot.val()[key].movie);
+    console.log(key);
+    $("#invitation")
+      .find(".movie-divs-template")
+      .remove();
+    $("#invitation")
+      .find(".restaurant-divs-template")
+      .remove();
     var movieCardInv = $("#templateMovie");
-    movieCardInv.find("a:first").attr("href", parsedObj.link);
-    movieCardInv.find("img:first").attr("src", parsedObj.poster);
-    movieCardInv.find(".movie-ratings").html(parsedObj.rate);
-    movieCardInv.find(".movie-titles").text(parsedObj.title);
-    movieCardInv.find(".release-dates").text(parsedObj.release);
-    $("#invitation").append(movieCardInv.html());
+    var restCardInv = $("#templateRest");
+    for (let i in key) {
+      console.log(snapshot.val()[key[i]].movie);
+      $("#userInviteText").text(
+        "Hey! It's " +
+          snapshot.val()[key[i]].from +
+          ". Let's plan to meet at " +
+          snapshot.val()[key[i]].address +
+          " around " +
+          snapshot.val()[key[i]].time +
+          ". See you there!"
+      );
+      $("#removeInvitation").css("visibility", "visible");
+      var parsedObj = JSON.parse(snapshot.val()[key[i]].movie);
+      var rateparseObj2 = JSON.parse(snapshot.val()[key[i]].restaurant);
+
+      //movie card render
+      movieCardInv.find("a:first").attr("href", parsedObj.link);
+      movieCardInv.find("img:first").attr("src", parsedObj.poster);
+      movieCardInv.find(".movie-ratings").html(parsedObj.rate);
+      movieCardInv.find(".movie-titles").text(parsedObj.title);
+      movieCardInv.find(".release-dates").text(parsedObj.release);
+
+      // restaurant card render
+
+      restCardInv.find("a:last").attr("href", rateparseObj2.rest_link);
+      restCardInv.find(".map-formatting").attr("src", rateparseObj2.map_img);
+      restCardInv
+        .find(".map-formatting")
+        .attr("alt", "Google Map Display of " + rateparseObj2.name);
+      restCardInv.find(".restaurant-ratings").html(rateparseObj2.rate);
+      restCardInv.find(".restaurant-names").text(rateparseObj2.name);
+      restCardInv
+        .find(".back-card")
+        .find("a")
+        .attr("src", rateparseObj2.map_link);
+      restCardInv
+        .find(".back-card")
+        .find("p")
+        .text(rateparseObj2.address);
+      restCardInv.find(".front-card").css("background", rateparseObj2.color);
+
+      //append everything
+      $("#invitation").append(movieCardInv.html(), restCardInv.html());
+    }
   });
 
 $("#removeInvitation").on("click", function() {
-  $("#invitation").empty();
+  $("#invitation")
+    .find(".movie-divs-template")
+    .remove();
+  $("#invitation")
+    .find(".restaurant-divs-template")
+    .remove();
+  $("#userInviteText").text("");
   Swal({
     text: "Your invitation has been deleted."
   });
