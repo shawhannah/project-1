@@ -696,6 +696,7 @@ footer {
   width: 70%;
   margin: auto;
   margin-bottom: 30px;
+  justify-items: center;
 }
 
 #sendInvitation {
@@ -733,6 +734,7 @@ footer {
   font-size: 22px;
   visibility: hidden;
   grid-row: 1;
+  grid-column: 1 / span 2;
 }
 
 /* Animate.js Styling */
