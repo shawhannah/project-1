@@ -6,6 +6,11 @@ a:hover {
   text-decoration: none;
 }
 
+input:focus,
+select:focus {
+  outline: none;
+}
+
 /* Main Grid Styling Below */
 #main-grid {
   display: grid;
@@ -588,10 +593,17 @@ footer {
   border-top: solid rgb(213, 53, 62, 0.8) 5px;
 }
 
-/* Styling for currentplans.html */
+/* Styling for Current Plans HTML Page*/
 #templateMovie,
 #templateRest {
   display: none;
+}
+
+#selections-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 90%;
+  margin: auto;
 }
 
 #favCard {
@@ -600,13 +612,10 @@ footer {
   position: relative;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.6);
-  padding: 25px;
-  min-height: 300px;
-  width: 70%;
-  margin: auto;
-  margin-bottom: 20px;
+  min-height: 400px;
   text-align: center;
-  grid-gap: 0 30px;
+  padding: 40px;
+  grid-gap: 30px;
 }
 .movie-divs-template {
   position: relative;
@@ -628,7 +637,7 @@ footer {
 }
 
 .cardText {
-  width: 70%;
+  width: 90%;
   margin: auto;
   padding-left: 0 !important;
   color: white;
@@ -640,6 +649,10 @@ footer {
   align-items: center;
 }
 
+#bottomCardText {
+  margin-top: 25px;
+}
+
 #timeText,
 #placeText,
 #dateText {
@@ -649,9 +662,36 @@ footer {
   font-size: 22px;
 }
 
-#time,
+.friendList {
+  width: 160px;
+  height: 40px;
+  border: none;
+}
+
+#date {
+  width: 200px;
+  height: 40px;
+  text-align: center;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+}
+
+#time {
+  width: 130px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+  text-align: center;
+}
+
 #address {
-  padding-left: 5px;
+  width: 250px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
 }
 
 .mini-cinegrub-logo {
@@ -665,9 +705,9 @@ footer {
 #clearFavCard {
   visibility: hidden;
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 25px;
+  bottom: 15px;
+  left: 15px;
+  font-size: 35px;
   color: white;
 }
 
@@ -675,15 +715,13 @@ footer {
   color: white;
   font-family: "Quicksand", sans-serif;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 17px;
-  margin: -20px auto 5px auto;
   background: rgb(0, 0, 0, 0.6);
-  width: 70%;
-  border-bottom-left-radius: 7px;
-  border-bottom-right-radius: 7px;
-  padding: 20px;
+  position: relative;
+  margin-left: 20px;
 }
 
 #invitation {
@@ -695,7 +733,7 @@ footer {
   background-color: rgba(0, 0, 0, 0.6);
   padding: 25px;
   min-height: 300px;
-  width: 70%;
+  width: 90%;
   margin: auto;
   margin-bottom: 30px;
 }
@@ -730,7 +768,7 @@ footer {
 #userInviteTextDiv {
   padding: 20px 20px 0 20px;
   background: rgb(0, 0, 0, 0.6);
-  width: 70%;
+  width: 90%;
   margin: auto;
   display: none;
 }
@@ -773,7 +811,7 @@ footer {
 
 #faqDiv {
   margin: auto;
-  width: 70%;
+  width: 900px;
   background: rgb(0, 0, 0, 0.6);
   padding: 30px;
   border-radius: 10px;
@@ -831,7 +869,7 @@ footer {
 
 #formspree {
   margin: 30px auto;
-  width: 70%;
+  width: 900px;
   background: rgb(0, 0, 0, 0.6);
   padding: 30px;
   border-radius: 10px;
