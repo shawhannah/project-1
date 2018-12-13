@@ -84,31 +84,45 @@
           <span class="mini-cinegrub-logo">CineGrub </span>Selections
         </p>
 
-        <div id="favCard">
-          <i id="clearFavCard" class="fas fa-trash-alt"></i>
-          <i id="sendInvitation" class="fas fa-share-square"></i>
+        <div id="selections-grid">
+          <div id="favCard">
+            <i
+              id="clearFavCard"
+              title="Remove Current Choices"
+              class="fas fa-trash-alt"
+            ></i>
+          </div>
+
+          <div class="invitationForm">
+            <i
+              id="sendInvitation"
+              title="Share Plans"
+              class="fas fa-share-square"
+            ></i>
+            <select class="friendList">
+              <option>Invite A Friend</option>
+            </select>
+            <label for="date" id="dateText">date...</label>
+            <input id="date" type="date" />
+            <label for="time" id="timeText">time...</label>
+            <input id="time" type="time" />
+            <label for="time" id="placeText">place...</label>
+            <input id="address" type="text" placeholder="address" />
+          </div>
         </div>
 
-        <div class="invitationForm">
-          <select class="friendList">
-            <option>Invite A Friend</option>
-          </select>
-          <label for="time" id="timeText">time...</label>
-          <input id="time" type="time" />
-          <label for="date" id="dateText">date...</label>
-          <input id="date" type="date" />
-          <label for="time" id="placeText">place...</label>
-          <input id="address" type="text" placeholder="address" />
-        </div>
-
-        <p class="cardText">
+        <p class="cardText" id="bottomCardText">
           <span class="mini-cinegrub-logo">CineGrub </span>Invitations
         </p>
 
         <div id="userInviteTextDiv"><p id="userInviteText"></p></div>
 
         <div id="invitation">
-          <i id="removeInvitation" class="fas fa-calendar"></i>
+          <i
+            id="removeInvitation"
+            class="fas fa-calendar"
+            title="Remove Calendar Invite"
+          ></i>
         </div>
 
         <div id="templateMovie">

@@ -14,9 +14,9 @@ var database = firebase.database();
 var zipcode;
 var movieArr;
 var zomatoArr;
-var extractLat;
-var extractLon;
-var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+var latitude;
+var longitude;
+var isValidFormat = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
 var everyOtherElement = 2; // Flag variable for designing every other Zomato card's color
 
 // DOM Reference Variables
@@ -25,7 +25,7 @@ var userInput = $("#user-input");
 var searchDiv = $("#search-div-formatting");
 var errorMessage = $("<p>")
   .attr("id", "error-message")
-  .text("Please enter a valid ZIP Code");
+  .html("Please enter a valid ZIP Code&trade;");
 var movieDiv = $("#moviedb-div");
 var zomatoDiv = $("#zomato-div");
 
@@ -48,13 +48,14 @@ submitButton.on("click", function(e) {
 
   preloader();
   setTimeout(function() {
-    if (!isValidZip.test(userInput.val().trim())) {
+    if (!isValidFormat.test(userInput.val().trim())) {
       searchDiv.append(errorMessage.slideDown());
     } else {
       errorMessage.slideUp();
       zipcode = userInput.val().trim();
-      $("#zipcode").text(zipcode);
       userInput.val("");
+      console.log("-------------------------------------------");
+      console.log("ZIP Code: " + zipcode);
 
       formatWebpage();
       $("#zipcode-alert").css("display", "block");
@@ -64,57 +65,70 @@ submitButton.on("click", function(e) {
       $("#search-div").css("grid-row", "2 / span 1");
       $("footer").css("display", "flex");
 
-      // AJAX Call for MovieDB API
-      $.ajax({
-        url: "https://api.themoviedb.org/3/movie/now_playing",
-        data: {
-          api_key: "b9a61052b8eb1f78c85667deffc9b7aa",
-          language: "en-US",
-          region: "us",
-          page: "1"
-        },
-        method: "GET"
-      }).then(function(response) {
-        movieArr = response.results;
-        showMovies(movieArr);
-      });
-
       // AJAX CALL for Google Maps API
       var googleMapsURL =
-        "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+        "https://maps.googleapis.com/maps/api/geocode/json?" +
+        "address=" +
         zipcode +
-        "&key=AIzaSyBxRCuURpipFqMG-FIb6tBy-UOa6Uvb2kw";
+        "&key=" +
+        "AIzaSyBxRCuURpipFqMG-FIb6tBy-UOa6Uvb2kw";
+      console.log("Google Maps Geocoding API Call: " + googleMapsURL);
 
       $.ajax({
         url: googleMapsURL,
         method: "GET"
       }).then(function(response) {
-        if (
-          response.status !== "ZERO_RESULTS" &&
-          response.results[0].formatted_address.includes(zipcode)
-        ) {
-          extractLat = response.results[0].geometry.location.lat;
-          extractLon = response.results[0].geometry.location.lng;
-          console.log(extractLat);
-          console.log(extractLon);
+        if (response.status === "ZERO_RESULTS") {
+          latitude = "undefined";
+          longitude = "undefined";
+          console.log("Latitude Coordinates: " + latitude);
+          console.log("Longitude Coordinates: " + longitude);
+        } else if (response.results[0].types[0] === "postal_code") {
+          latitude = response.results[0].geometry.location.lat;
+          longitude = response.results[0].geometry.location.lng;
+          console.log("Latitude Coordinates: " + latitude);
+          console.log("Longitude Coordinates: " + longitude);
         } else {
-          extractLat = "undefined";
-          extractLon = "undefined";
+          latitude = "undefined";
+          longitude = "undefined";
+          console.log("Latitude Coordinates: " + latitude);
+          console.log("Longitude Coordinates: " + longitude);
         }
-      });
 
-      // Because AJAX Calls are asynchronous, setTimeout() ensures this runs last
-      setTimeout(function() {
-        if (extractLat !== "undefined" || extractLon !== "undefined") {
-          preloader();
+        if (latitude !== "undefined" && longitude !== "undefined") {
+          $("#zipcode-alert")
+            .text("Results found for: ")
+            .append(
+              $("<span>")
+                .text(zipcode)
+                .attr("id", "zipcode")
+            );
+
+          // AJAX Call for MovieDB API
+          $.ajax({
+            url: "https://api.themoviedb.org/3/movie/now_playing",
+            data: {
+              api_key: "b9a61052b8eb1f78c85667deffc9b7aa",
+              language: "en-US",
+              region: "us",
+              page: "1"
+            },
+            method: "GET"
+          }).then(function(response) {
+            movieArr = response.results;
+            showMovies(movieArr);
+          });
+
           // AJAX Call for Zomato API
           var queryURL =
-            "https://developers.zomato.com/api/v2.1/search?lat=" +
-            extractLat +
+            "https://developers.zomato.com/api/v2.1/search?" +
+            "lat=" +
+            latitude +
             "&lon=" +
-            extractLon +
-            "&apikey=b33efca80e6e3f8b5a3cfaf40c6ad1f4";
-          console.log(queryURL);
+            longitude +
+            "&apikey=" +
+            "b33efca80e6e3f8b5a3cfaf40c6ad1f4";
+          console.log("Zomato API Call: " + queryURL);
 
           $.ajax({
             url: queryURL,
@@ -127,25 +141,29 @@ submitButton.on("click", function(e) {
           Swal({
             type: "error",
             title: "Error...",
-            text:
-              "The zipcode you entered is not a valid US zipcode. Please try again."
+            html:
+              "The value you entered is not a valid US ZIP Code&trade;. Please try again."
           });
 
           zomatoDiv.empty();
           zomatoDiv.append(
             $("<p>")
-              .text("No results were found.")
+              .text("No results were found for " + zipcode + ".")
               .addClass("noResultsFound")
           );
 
           movieDiv.empty();
           movieDiv.append(
             $("<p>")
-              .text("No results were found.")
+              .text("No results were found for " + zipcode + ".")
               .addClass("noResultsFound")
           );
+
+          $("#zipcode-alert")
+            .text("")
+            .empty();
         }
-      }, 1000);
+      });
     }
   }, 1000);
 });
@@ -975,4 +993,78 @@ $("#removeInvitation").on("click", function() {
   $("#removeInvitation").css("visibility", "hidden");
   $("#userInviteText").css("visibility", "hidden");
   $("#userInviteTextDiv").css("display", "none");
+});
+
+// Dynamic Contact Form Events Below
+$("#nameFormspree").keyup(function() {
+  if (
+    $("#nameFormspree")
+      .val()
+      .trim() !== ""
+  ) {
+    $("#nameFormspree").css("border-bottom", "solid white 2px");
+  } else {
+    $("#nameFormspree").css("border-bottom", "solid indianred 2px");
+  }
+});
+
+$("#emailFormspree").keyup(function() {
+  if (
+    $("#emailFormspree")
+      .val()
+      .trim() !== ""
+  ) {
+    $("#emailFormspree").css("border-bottom", "solid white 2px");
+  } else {
+    $("#emailFormspree").css("border-bottom", "solid indianred 2px");
+  }
+});
+
+$("#subjectFormspree").keyup(function() {
+  if (
+    $("#subjectFormspree")
+      .val()
+      .trim() !== ""
+  ) {
+    $("#subjectFormspree").css("border-bottom", "solid white 2px");
+  } else {
+    $("#subjectFormspree").css("border-bottom", "solid indianred 2px");
+  }
+});
+
+$("#textFormspree").keyup(function() {
+  if (
+    $("#textFormspree")
+      .val()
+      .trim() !== ""
+  ) {
+    $("#textFormspree").css("border-bottom", "solid white 2px");
+  } else {
+    $("#textFormspree").css("border-bottom", "solid indianred 2px");
+  }
+});
+
+$("#formOutline").keyup(function() {
+  if (
+    $("#nameFormspree")
+      .val()
+      .trim() !== "" &&
+    $("#emailFormspree")
+      .val()
+      .trim() !== "" &&
+    $("#subjectFormspree")
+      .val()
+      .trim() !== "" &&
+    $("#textFormspree")
+      .val()
+      .trim() !== ""
+  ) {
+    $("#formOutline").css("border", "solid white 2px");
+    $("#submitFormspree").css("border", "solid white 2px");
+    $("#submitFormspree").css("color", "white");
+  } else {
+    $("#formOutline").css("border", "solid indianred 2px");
+    $("#submitFormspree").css("border", "solid indianred 2px");
+    $("#submitFormspree").css("color", "indianred");
+  }
 });
