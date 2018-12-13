@@ -836,6 +836,9 @@ $("#sendInvitation").on("click", function() {
       .trim() === "" ||
     $("#address")
       .val()
+      .trim() === "" ||
+    $("#date")
+      .val()
       .trim() === ""
   ) {
     Swal({
@@ -856,6 +859,7 @@ $("#sendInvitation").on("click", function() {
           .text(),
         time: $("#time").val(),
         address: $("#address").val(),
+        date: $("#date").val(),
         movie: localStorage.getItem(
           localStorage.getItem("login") + "movieCard"
         ),
@@ -870,9 +874,9 @@ $("#sendInvitation").on("click", function() {
     $("#time").val("");
     $("#address").val("");
     $(".friendList").prop("selectedIndex", 0);
+    $("#date").val("");
   }
 });
-
 database
   .ref("invitations/" + localStorage.getItem("login"))
 
@@ -901,7 +905,9 @@ database
       $("#userInviteText").text(
         "Hey! It's " +
           snapshot.val().from +
-          ". Let's plan to meet at " +
+          ". Let's plan to meet on " +
+          moment(snapshot.val().date).format("MMM Do") +
+          " at " +
           snapshot.val().address +
           " around " +
           snapshot.val().time +

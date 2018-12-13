@@ -641,7 +641,8 @@ footer {
 }
 
 #timeText,
-#placeText {
+#placeText,
+#dateText {
   margin: 0;
   padding: 10px;
   font-weight: bold;
@@ -679,9 +680,10 @@ footer {
   font-size: 17px;
   margin: -20px auto 5px auto;
   background: rgb(0, 0, 0, 0.6);
-  width: 51%;
+  width: 70%;
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
+  padding: 20px;
 }
 
 #invitation {
