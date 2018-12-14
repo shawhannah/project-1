@@ -146,6 +146,7 @@ submitButton.on("click", function(e) {
               "The value you entered is not a valid US ZIP Code&trade;. Please try again."
           });
 
+          $("html, body").animate({ scrollTop: 0 }, "fast");
           zomatoDiv.empty();
           zomatoDiv.append(
             $("<p>")
