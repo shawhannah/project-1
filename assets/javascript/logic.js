@@ -779,7 +779,11 @@ $(document).on("click", ".addToFavRestaurant", function() {
     color: $(this)
       .closest(".restaurant-divs")
       .find(".front-card")
-      .css("background")
+      .css("background"),
+    buttonColor: $(this)
+      .closest(".restaurant-divs")
+      .find(".more-info")
+      .attr("class")
   };
 
   localStorage.setItem(
@@ -817,6 +821,7 @@ function renderRestCard(template) {
     .find("p")
     .text(addedRestCard.address);
   template.find(".front-card").css("background", addedRestCard.color);
+  template.find(".more-info").attr("class", addedRestCard.buttonColor);
   $("#favCard").append(template.html());
 }
 
@@ -970,6 +975,7 @@ database
           .find("p")
           .text(rateparseObj2.address);
         restCardInv.find(".front-card").css("background", rateparseObj2.color);
+        restCardInv.find(".more-info").attr("class", rateparseObj2.buttonColor);
         $("#invitation").append(restCardInv.html());
       }
 
