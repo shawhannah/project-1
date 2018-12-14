@@ -103,6 +103,7 @@ submitButton.on("click", function(e) {
                 .text(zipcode)
                 .attr("id", "zipcode")
             );
+          $("html, body").animate({ scrollTop: 0 }, "fast");
 
           // AJAX Call for MovieDB API
           $.ajax({
