@@ -172,7 +172,6 @@ submitButton.on("click", function(e) {
 
 // This function reformats landing page
 function formatWebpage() {
-  $("#head-title").text("CineGrub");
   $("#userLogin").css("display", "none");
   $("#search-div-formatting").css("display", "flex");
   $("#cinegrub-intro").css("display", "none");
