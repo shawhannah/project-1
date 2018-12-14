@@ -934,7 +934,7 @@ database
           " at " +
           snapshot.val().address +
           " around " +
-          snapshot.val().time +
+          moment(snapshot.val().time, "HH:mm").format("hh:mm A") +
           ". See you there!"
       );
 
