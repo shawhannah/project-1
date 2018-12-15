@@ -353,7 +353,7 @@ function showFood(array) {
     var foodPic = $("<i>").addClass("fas fa-utensils");
 
     var foodRatingDiv = $("<div>").addClass("restaurant-ratings");
-    var foodRating = parseInt(array[i].restaurant.user_rating.aggregate_rating);
+    var foodRating = array[i].restaurant.user_rating.aggregate_rating;
     if (foodRating >= 4.5) {
       foodRatingDiv.append(
         $("<i>").addClass("fas fa-star"),
