@@ -10,12 +10,13 @@ We discussed the main objectives of our project and decided who would focus on s
 
 Hannah - I contributed the code for the Zomato API and provided edits and changes to website copy for grammar and spelling. I created and updated the presentation deck. I structured and wrote the ReadMe file. 
 
-Keiran -
+Keiran - I worked on the FAQ page and contact form on the website. I attempted to include the JavaScript Google Maps API, but we ended up not using that specific API. I also contributed to the CSS. 
 
-Kseniia - 
+Kseniia - I worked the AJAX request forthe movie database and the account authentication feature that saves data in local storage. I worked on the invitation and favorites functionalities.
 
-David - 
+David - I worked on the overall CSS for the website. I created the functionality for the submit button, the loading icon, Google Maps API with AJAX, fixing user authentication bugs, and enhancing the Zomato & MovieDB APIs with star ratings using Font Awesome 5.
 
+As a team, we additionally contributed on an as-needed basis. We collaborated and shared ideas, and worked together to make our project not only functional, but also fun and easy to use. 
 
 Challenges we experienced were 
 - including JavaScript API
