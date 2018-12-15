@@ -938,7 +938,7 @@ database
           ". See you there!"
       );
 
-      // Workaround for making these DOM elements appear under specific conditions
+      // Workaround for making these DOM elements appear under specific conditions (Duplicate Code NECCESSARY)
       if ($("#userInviteText").text() !== "") {
         $("#removeInvitation").css("visibility", "visible");
         $("#userInviteTextDiv").css("display", "block");
